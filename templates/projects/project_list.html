@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects — {{ site_config.full_name }}{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <span class="section__label reveal">Portfolio</span>
+        <h1 class="page-header__title reveal">My <span class="text-gradient">Projects</span></h1>
+        <p class="page-header__subtitle reveal">A curated collection of work showcasing my expertise in building
+            production-grade systems.</p>
+    </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+    <div class="container">
+        <!-- Filter Tabs -->
+        {% if technologies %}
+        <div class="filter-tabs reveal">
+            <a href="{% url 'projects:list' %}" class="filter-tab {% if not active_filter %}active{% endif %}">All</a>
+            {% for tech in technologies %}
+            <a href="{% url 'projects:list' %}?tech={{ tech.slug }}"
+                class="filter-tab {% if active_filter == tech.slug %}active{% endif %}">{{ tech.name }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            {% for project in projects %}
+            <a href="{% url 'projects:detail' project.slug %}" class="project-card reveal" data-cursor-hover>
+                <div class="project-card__arrow">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                </div>
+                <div class="project-card__image">
+                    {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" loading="lazy">
+                    {% else %}
+                    <div
+                        style="width:100%;height:100%;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;font-size:3rem;">
+                        🚀</div>
+                    {% endif %}
+                </div>
+                <div class="project-card__body">
+                    <div class="project-card__techs">
+                        {% for tech in project.technologies.all|slice:":4" %}
+                        <span class="tag" style="border-color: {{ tech.color }}40; color: {{ tech.color }};">{{
+                            tech.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <h3 class="project-card__title">{{ project.title }}</h3>
+                    <p class="project-card__tagline">{{ project.tagline }}</p>
+                </div>
+            </a>
+            {% empty %}
+            <div class="empty-state" style="grid-column: 1/-1;">
+                <div class="empty-state__icon">📁</div>
+                <p class="empty-state__text">Projects will appear here once added via the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

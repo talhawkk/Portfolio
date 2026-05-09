@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ project.title }} — {{ site_config.full_name }}{% endblock %}
+{% block content %}
+<section class="project-hero">
+    <div class="container">
+        <div class="reveal">
+            <a href="{% url 'projects:list' %}" class="btn btn--ghost" style="margin-bottom:var(--space-md);">← Back to
+                Projects</a>
+        </div>
+        <div class="reveal">
+            <div class="project-card__techs" style="margin-bottom:var(--space-md);">
+                {% for tech in project.technologies.all %}<span class="tag"
+                    style="border-color:{{tech.color}}40;color:{{tech.color}};">{{tech.name}}</span>{% endfor %}
+            </div>
+            <h1 style="font-size:var(--fs-h1);margin-bottom:var(--space-sm);">{{project.title}}</h1>
+            <p style="font-size:var(--fs-body);color:var(--text-secondary);max-width:700px;">{{project.description}}</p>
+            <div style="display:flex;gap:var(--space-md);margin-top:var(--space-lg);">
+                {% if project.live_url %}<a href="{{project.live_url}}" target="_blank" class="btn btn--primary"
+                    data-cursor-hover>Live Demo</a>{% endif %}
+                {% if project.github_url %}<a href="{{project.github_url}}" target="_blank" class="btn btn--outline"
+                    data-cursor-hover>Source Code</a>{% endif %}
+            </div>
+        </div>
+        {% if project.featured_image %}<div class="project-hero__image reveal"><img src="{{project.featured_image.url}}"
+                alt="{{project.title}}"></div>{% endif %}
+    </div>
+</section>
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="project-detail__content">
+            <div class="project-detail__main reveal">
+                {% if project.challenge %}<h2>The Challenge</h2>
+                <p>{{project.challenge|linebreaksbr}}</p>{% endif %}
+                {% if project.solution %}<h2>The Solution</h2>
+                <p>{{project.solution|linebreaksbr}}</p>{% endif %}
+                {% if project.detailed_description %}<h2>Deep Dive</h2>{{project.detailed_description|safe}}{% endif %}
+                {% if project.results %}<h2>Results & Impact</h2>
+                <p>{{project.results|linebreaksbr}}</p>{% endif %}
+                {% if project.images.all %}<h2>Gallery</h2>
+                <div class="project-gallery">{% for img in project.images.all %}<div class="project-gallery__item"><img
+                            src="{{img.image.url}}" alt="{{img.caption|default:project.title}}" loading="lazy"></div>{%
+                    endfor %}</div>{% endif %}
+            </div>
+            <aside class="project-detail__sidebar reveal">
+                <div class="project-detail__info-card">
+                    <div class="project-detail__info-item">
+                        <div class="project-detail__info-label">Project</div>
+                        <div class="project-detail__info-value">{{project.title}}</div>
+                    </div>
+                    <div class="project-detail__info-item">
+                        <div class="project-detail__info-label">Year</div>
+                        <div class="project-detail__info-value">{{project.created_at|date:"Y"}}</div>
+                    </div>
+                    <div class="project-detail__info-item">
+                        <div class="project-detail__info-label">Technologies</div>
+                        <div class="project-detail__info-value">{% for tech in project.technologies.all
+                            %}{{tech.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                    </div>
+                    {% if project.live_url %}<div class="project-detail__info-item">
+                        <div class="project-detail__info-label">Live URL</div>
+                        <div class="project-detail__info-value"><a href="{{project.live_url}}" target="_blank"
+                                style="color:var(--accent-primary);">Visit →</a></div>
+                    </div>{% endif %}
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+{% if related_projects %}<section class="related-section">
+    <div class="container">
+        <div class="section__header reveal">
+            <h2 class="section__title">Related Projects</h2>
+        </div>
+        <div class="projects-grid">{% for rp in related_projects %}<a href="{% url 'projects:detail' rp.slug %}"
+                class="project-card reveal">
+                <div class="project-card__image">{% if rp.featured_image %}<img src="{{rp.featured_image.url}}"
+                        alt="{{rp.title}}" loading="lazy">{% else %}<div
+                        style="width:100%;height:100%;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;font-size:3rem;">
+                        🚀</div>{% endif %}</div>
+                <div class="project-card__body">
+                    <h3 class="project-card__title">{{rp.title}}</h3>
+                    <p class="project-card__tagline">{{rp.tagline}}</p>
+                </div>
+            </a>{% endfor %}</div>
+    </div>
+</section>{% endif %}
+{% endblock %}

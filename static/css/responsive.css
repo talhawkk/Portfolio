@@ -1,0 +1,249 @@
+/*
+ * ========================================
+ *  PORTFOLIO — Responsive Breakpoints
+ *  Mobile-first, premium experience
+ * ========================================
+ */
+
+/* ── Mobile (< 480px) ── */
+@media (max-width: 479px) {
+    :root {
+        --nav-height: 64px;
+    }
+
+    .container {
+        padding: 0 var(--space-md);
+    }
+
+    .hero__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero__actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+    }
+
+    .stat-card {
+        padding: var(--space-md);
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+    }
+}
+
+/* ── Small tablets (480px - 767px) ── */
+@media (max-width: 767px) {
+    .navbar__links {
+        display: none;
+    }
+
+    .navbar__cta {
+        display: none;
+    }
+
+    .navbar__hamburger {
+        display: flex;
+    }
+
+    .about-preview {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .about-hero {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+        text-align: center;
+    }
+
+    .about-hero__image {
+        max-width: 350px;
+        margin: 0 auto;
+        aspect-ratio: 1;
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .project-detail__content {
+        grid-template-columns: 1fr;
+    }
+
+    .project-detail__sidebar {
+        position: static;
+    }
+
+    .footer__inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero__scroll-indicator {
+        display: none;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline {
+        padding-left: var(--space-lg);
+    }
+}
+
+/* ── Tablets (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .navbar__hamburger {
+        display: flex;
+    }
+
+    .navbar__links {
+        display: none;
+    }
+
+    .navbar__cta {
+        display: none;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-preview {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ── Laptops (1024px - 1439px) ── */
+@media (min-width: 1024px) {
+    .navbar__hamburger {
+        display: none;
+    }
+
+    .navbar__links {
+        display: flex;
+    }
+}
+
+/* ── Desktops (1440px+) ── */
+@media (min-width: 1440px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ── Ultra-wide (1920px+) ── */
+@media (min-width: 1920px) {
+    :root {
+        --max-width: 1600px;
+    }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+
+    .hero__title .line-inner {
+        transform: none;
+    }
+
+    .hero__label,
+    .hero__subtitle,
+    .hero__actions,
+    .hero__scroll-indicator {
+        opacity: 1;
+    }
+}
+
+/* ── Touch device optimizations ── */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .navbar__link {
+        padding: var(--space-xs) var(--space-sm);
+    }
+
+    .btn {
+        min-height: 48px;
+        min-width: 48px;
+    }
+
+    .filter-tab {
+        min-height: 44px;
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    /* Remove hover effects that look odd on mobile */
+    .project-card:hover {
+        transform: none;
+    }
+
+    .blog-card:hover {
+        transform: none;
+    }
+
+    .skill-item:hover {
+        transform: none;
+    }
+
+    /* Disable hover image zoom on mobile */
+    .project-card:hover .project-card__image img,
+    .blog-card:hover .blog-card__image img {
+        transform: none;
+    }
+}

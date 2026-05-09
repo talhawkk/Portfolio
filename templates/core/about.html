@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About — {{ site_config.full_name }}{% endblock %}
+
+{% block content %}
+
+<!-- About Hero -->
+<section class="about-hero" id="about-hero">
+    <div class="container">
+        <div class="about-preview" style="padding-top: var(--nav-height);">
+            <div class="about-preview__text reveal">
+                <span class="section__label">About Me</span>
+                <h1>{{ site_config.full_name|default:"Talha Abbas" }}</h1>
+                <h3 style="color: var(--accent-primary); margin-bottom: var(--space-md); font-weight: var(--fw-medium);">{{ site_config.title|default:"Full-Stack Engineer & AI Developer" }}</h3>
+                <p>{{ site_config.detailed_bio|default:site_config.bio|default:"I'm a passionate software engineer with a deep focus on building scalable, production-grade systems. My expertise spans full-stack web development, AI/ML integration, and enterprise architecture." }}</p>
+                <p>I believe in writing clean, maintainable code that not only works but tells a story. Every project I take on is an opportunity to push boundaries and create something meaningful.</p>
+
+                {% if site_config.resume_file %}
+                <a href="{{ site_config.resume_file.url }}" class="btn btn--primary" download data-cursor-hover>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Resume
+                </a>
+                {% endif %}
+            </div>
+
+            <div class="stats-grid reveal" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="stat-card">
+                    <div class="stat-card__number" data-count="{{ site_config.years_experience|default:3 }}">0</div>
+                    <div class="stat-card__label">Years Exp.</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__number" data-count="{{ site_config.projects_completed|default:10 }}">0</div>
+                    <div class="stat-card__label">Projects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__number" data-count="{{ site_config.technologies_used|default:20 }}">0</div>
+                    <div class="stat-card__label">Technologies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__number" data-count="99">0</div>
+                    <div class="stat-card__label">Satisfaction %</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Skills Section -->
+<section class="section" id="skills-section">
+    <div class="container">
+        <div class="section__header reveal">
+            <span class="section__label">Expertise</span>
+            <h2 class="section__title">Skills & Technologies</h2>
+        </div>
+
+        {% for category, category_skills in skills_by_category.items %}
+        <div class="skills-section__category reveal">
+            <h3 class="skills-section__category-title">{{ category }}</h3>
+            <div class="skills-grid">
+                {% for skill in category_skills %}
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">{{ skill.icon_class|default:"⚡" }}</div>
+                    <div class="skill-item__name">{{ skill.name }}</div>
+                    <div class="skill-item__bar">
+                        <div class="skill-item__bar-fill" data-width="{{ skill.proficiency }}"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="empty-state__text" style="text-align:center; color: var(--text-muted);">Skills will appear here once added via the admin panel.</p>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- Experience -->
+<section class="section" id="experience-section">
+    <div class="container container--narrow">
+        <div class="section__header reveal">
+            <span class="section__label">Journey</span>
+            <h2 class="section__title">Experience</h2>
+        </div>
+
+        <div class="timeline">
+            {% for exp in experiences %}
+            <div class="timeline__item {% if exp.is_current %}current{% endif %} reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__date">{{ exp.duration_display }}</div>
+                <h3 class="timeline__title">{{ exp.title }}</h3>
+                <p class="timeline__company">{{ exp.company }}{% if exp.location %} · {{ exp.location }}{% endif %}</p>
+                <p class="timeline__description">{{ exp.description|linebreaksbr }}</p>
+            </div>
+            {% empty %}
+            <p class="empty-state__text" style="text-align:center; color: var(--text-muted);">Experience entries will appear here once added via the admin panel.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Education -->
+<section class="section" id="education-section">
+    <div class="container container--narrow">
+        <div class="section__header reveal">
+            <span class="section__label">Academic</span>
+            <h2 class="section__title">Education</h2>
+        </div>
+
+        <div class="timeline">
+            {% for edu in education %}
+            <div class="timeline__item {% if edu.is_current %}current{% endif %} reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__date">{{ edu.start_year }} — {% if edu.is_current %}Present{% elif edu.end_year %}{{ edu.end_year }}{% endif %}</div>
+                <h3 class="timeline__title">{{ edu.degree }}</h3>
+                <p class="timeline__company">{{ edu.institution }}</p>
+                {% if edu.description %}
+                <p class="timeline__description">{{ edu.description|linebreaksbr }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p class="empty-state__text" style="text-align:center; color: var(--text-muted);">Education entries will appear here once added via the admin panel.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="reveal">
+            <h2 class="cta-section__title">Want to work <span class="text-gradient">together?</span></h2>
+            <p class="cta-section__subtitle">Let's discuss how I can help bring your ideas to life.</p>
+            <a href="{% url 'core:contact' %}" class="btn btn--primary" data-cursor-hover>Get in Touch</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

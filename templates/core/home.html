@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_config.full_name }} — {{ site_config.title }}{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════ -->
+<!--  HERO SECTION                          -->
+<!-- ═══════════════════════════════════════ -->
+<section class="hero" id="hero">
+    <canvas class="hero__canvas" id="hero-canvas"></canvas>
+
+    <!-- Gradient orbs -->
+    <div class="hero__orb hero__orb--1"></div>
+    <div class="hero__orb hero__orb--2"></div>
+
+    <div class="container">
+        <div class="hero__content">
+            <div class="hero__label" id="hero-label">
+                <span class="dot"></span>
+                <span>Available for work</span>
+            </div>
+
+            <h1 class="hero__title" id="hero-title">
+                <span class="line"><span class="line-inner">{{ site_config.tagline|default:"I Build Systems" }}</span></span>
+                <span class="line"><span class="line-inner text-gradient">That Scale.</span></span>
+            </h1>
+
+            <p class="hero__subtitle" id="hero-subtitle">
+                {{ site_config.subtitle|default:"Engineering premium digital experiences with cutting-edge technology. Full-stack development, AI integration, and enterprise-grade architecture." }}
+            </p>
+
+            <div class="hero__actions" id="hero-actions">
+                <a href="{% url 'projects:list' %}" class="btn btn--primary" data-cursor-hover>View Projects</a>
+                <a href="{% url 'core:contact' %}" class="btn btn--outline" data-cursor-hover>Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero__scroll-indicator" id="hero-scroll">
+        <span>Scroll</span>
+        <div class="hero__scroll-line"></div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  STATS SECTION                         -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card reveal">
+                <div class="stat-card__number" data-count="{{ site_config.years_experience|default:1 }}">0</div>
+                <div class="stat-card__label">Years Experience</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-card__number" data-count="{{ site_config.projects_completed|default:10 }}">0</div>
+                <div class="stat-card__label">Projects Completed</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-card__number" data-count="{{ site_config.technologies_used|default:99 }}">0</div>
+                <div class="stat-card__label">Technologies Used</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-card__number" data-count="99">0</div>
+                <div class="stat-card__label">Client Satisfaction %</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  ABOUT PREVIEW SECTION                 -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="about-section">
+    <div class="container">
+        <div class="about-preview">
+            <div class="about-preview__text reveal">
+                <span class="section__label">About Me</span>
+                <h2>Crafting Digital<br><span class="text-gradient">Excellence</span></h2>
+                <p>{{ site_config.bio|default:"I'm a passionate full-stack engineer specializing in building high-performance web applications. From enterprise SaaS platforms to AI-driven trading systems, I transform complex problems into elegant solutions." }}</p>
+                <p>My approach combines clean architecture, modern design principles, and cutting-edge technology to deliver production-grade systems that make a difference.</p>
+                <a href="{% url 'core:about' %}" class="btn btn--outline" data-cursor-hover>Learn More</a>
+            </div>
+
+            <div class="skills-grid reveal">
+                {% for skill in skills %}
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">{{ skill.icon_class|default:"⚡" }}</div>
+                    <div class="skill-item__name">{{ skill.name }}</div>
+                    <div class="skill-item__bar">
+                        <div class="skill-item__bar-fill" data-width="{{ skill.proficiency }}"></div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">🐍</div>
+                    <div class="skill-item__name">Python</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="95"></div></div>
+                </div>
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">🌐</div>
+                    <div class="skill-item__name">Django</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="90"></div></div>
+                </div>
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">⚛️</div>
+                    <div class="skill-item__name">JavaScript</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="85"></div></div>
+                </div>
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">🤖</div>
+                    <div class="skill-item__name">ML / AI</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="80"></div></div>
+                </div>
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">🐘</div>
+                    <div class="skill-item__name">PostgreSQL</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="85"></div></div>
+                </div>
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__icon">🐳</div>
+                    <div class="skill-item__name">Docker</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="75"></div></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  FEATURED PROJECTS SECTION             -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="projects-section">
+    <div class="container">
+        <div class="section__header reveal">
+            <span class="section__label">Portfolio</span>
+            <h2 class="section__title">Featured Projects</h2>
+            <p class="section__subtitle">A selection of recent work that showcases my expertise in building production-grade systems.</p>
+        </div>
+
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <a href="{% url 'projects:detail' project.slug %}" class="project-card reveal" data-cursor-hover>
+                <div class="project-card__arrow">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
+                <div class="project-card__image">
+                    {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" loading="lazy">
+                    {% else %}
+                    <div style="width:100%;height:100%;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;font-size:3rem;">🚀</div>
+                    {% endif %}
+                </div>
+                <div class="project-card__body">
+                    <div class="project-card__techs">
+                        {% for tech in project.technologies.all|slice:":4" %}
+                        <span class="tag" style="border-color: {{ tech.color|add:'40' }}; color: {{ tech.color }};">{{ tech.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <h3 class="project-card__title">{{ project.title }}</h3>
+                    <p class="project-card__tagline">{{ project.tagline }}</p>
+                </div>
+            </a>
+            {% empty %}
+            <!-- Placeholder projects when none in DB yet -->
+            <div class="project-card reveal">
+                <div class="project-card__image">
+                    <div style="width:100%;height:100%;background:linear-gradient(135deg, #0a1628, #1a1a3e);display:flex;align-items:center;justify-content:center;font-size:4rem;">🤖</div>
+                </div>
+                <div class="project-card__body">
+                    <div class="project-card__techs">
+                        <span class="tag">Python</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">ML</span>
+                    </div>
+                    <h3 class="project-card__title">AlphaRexx Trading SaaS</h3>
+                    <p class="project-card__tagline">Enterprise AI-driven crypto trading platform with ML signal generation.</p>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-card__image">
+                    <div style="width:100%;height:100%;background:linear-gradient(135deg, #0f1a2e, #1e1438);display:flex;align-items:center;justify-content:center;font-size:4rem;">👁️</div>
+                </div>
+                <div class="project-card__body">
+                    <div class="project-card__techs">
+                        <span class="tag">Python</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">CV</span>
+                    </div>
+                    <h3 class="project-card__title">Object Tracking System</h3>
+                    <p class="project-card__tagline">Real-time feature-based object tracking with computer vision.</p>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-card__image">
+                    <div style="width:100%;height:100%;background:linear-gradient(135deg, #1a0a1e, #0a1a2e);display:flex;align-items:center;justify-content:center;font-size:4rem;">📱</div>
+                </div>
+                <div class="project-card__body">
+                    <div class="project-card__techs">
+                        <span class="tag">Kotlin</span>
+                        <span class="tag">Android</span>
+                    </div>
+                    <h3 class="project-card__title">AntiTheft Mobile App</h3>
+                    <p class="project-card__tagline">Android security app with real-time monitoring and alert system.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-xl);">
+            <a href="{% url 'projects:list' %}" class="btn btn--outline reveal" data-cursor-hover>View All Projects →</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  EXPERIENCE TIMELINE SECTION           -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="experience-section">
+    <div class="container container--narrow">
+        <div class="section__header reveal">
+            <span class="section__label">Journey</span>
+            <h2 class="section__title">Experience</h2>
+            <p class="section__subtitle">Professional milestones and career highlights.</p>
+        </div>
+
+        <div class="timeline">
+            {% for exp in experiences %}
+            <div class="timeline__item {% if exp.is_current %}current{% endif %} reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__date">{{ exp.duration_display }}</div>
+                <h3 class="timeline__title">{{ exp.title }}</h3>
+                <p class="timeline__company">{{ exp.company }}{% if exp.location %} · {{ exp.location }}{% endif %}</p>
+                <p class="timeline__description">{{ exp.description|linebreaksbr }}</p>
+            </div>
+            {% empty %}
+            <div class="timeline__item current reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__date">2024 — Present</div>
+                <h3 class="timeline__title">Full-Stack Developer & AI Engineer</h3>
+                <p class="timeline__company">Freelance · Remote</p>
+                <p class="timeline__description">Building enterprise-grade SaaS platforms, AI-driven trading systems, and production-ready web applications for clients across multiple industries.</p>
+            </div>
+            <div class="timeline__item reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__date">2022 — 2026</div>
+                <h3 class="timeline__title">BS Computer Science</h3>
+                <p class="timeline__company">University</p>
+                <p class="timeline__description">Specializing in artificial intelligence, machine learning, and software engineering. Building real-world production systems alongside academic excellence.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  BLOG PREVIEW SECTION                  -->
+<!-- ═══════════════════════════════════════ -->
+{% if blog_posts %}
+<section class="section" id="blog-section">
+    <div class="container">
+        <div class="section__header reveal">
+            <span class="section__label">Insights</span>
+            <h2 class="section__title">Latest Posts</h2>
+            <p class="section__subtitle">Thoughts on engineering, architecture, and building at scale.</p>
+        </div>
+
+        <div class="blog-grid">
+            {% for post in blog_posts %}
+            <a href="{% url 'blog:detail' post.slug %}" class="blog-card reveal" data-cursor-hover>
+                {% if post.featured_image %}
+                <div class="blog-card__image">
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" loading="lazy">
+                </div>
+                {% endif %}
+                <div class="blog-card__body">
+                    <div class="blog-card__meta">
+                        {% if post.category %}
+                        <span class="blog-card__category">{{ post.category.name }}</span>
+                        <span>·</span>
+                        {% endif %}
+                        <span>{{ post.reading_time }} min read</span>
+                        <span>·</span>
+                        <span>{{ post.published_date|date:"M d, Y" }}</span>
+                    </div>
+                    <h3 class="blog-card__title">{{ post.title }}</h3>
+                    <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-xl);">
+            <a href="{% url 'blog:list' %}" class="btn btn--outline reveal" data-cursor-hover>Read All Posts →</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  CTA SECTION                           -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section cta-section" id="cta-section">
+    <div class="container">
+        <div class="reveal">
+            <span class="section__label">Let's Connect</span>
+            <h2 class="cta-section__title">Have a project<br><span class="text-gradient">in mind?</span></h2>
+            <p class="cta-section__subtitle">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+            <a href="{% url 'core:contact' %}" class="btn btn--primary" data-cursor-hover>Start a Conversation</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/three/hero-scene.js' %}"></script>
+<script src="{% static 'js/pages/home.js' %}"></script>
+{% endblock %}

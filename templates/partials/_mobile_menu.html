@@ -1,0 +1,10 @@
+{% load static %}
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobile-menu">
+    <a href="{% url 'core:home' %}" class="mobile-menu__link" style="transition-delay: 0.1s;">Home</a>
+    <a href="{% url 'core:about' %}" class="mobile-menu__link" style="transition-delay: 0.15s;">About</a>
+    <a href="{% url 'projects:list' %}" class="mobile-menu__link" style="transition-delay: 0.2s;">Projects</a>
+    <a href="{% url 'blog:list' %}" class="mobile-menu__link" style="transition-delay: 0.25s;">Blog</a>
+    <a href="{% url 'core:contact' %}" class="mobile-menu__link" style="transition-delay: 0.3s;">Contact</a>
+</div>

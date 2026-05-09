@@ -1,0 +1,26 @@
+{% load static %}
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+        <a href="{% url 'core:home' %}" class="navbar__logo">
+            {{ site_config.full_name|default:"Talha Abbas" }}
+        </a>
+
+        <div class="navbar__links" id="navbar-links">
+            <a href="{% url 'core:home' %}" class="navbar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+            <a href="{% url 'core:about' %}" class="navbar__link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+            <a href="{% url 'projects:list' %}" class="navbar__link {% if 'projects' in request.resolver_match.app_name %}active{% endif %}">Projects</a>
+            <a href="{% url 'blog:list' %}" class="navbar__link {% if 'blog' in request.resolver_match.app_name %}active{% endif %}">Blog</a>
+            <a href="{% url 'core:contact' %}" class="navbar__link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+        </div>
+
+        <a href="{% url 'core:contact' %}" class="btn btn--outline navbar__cta">Let's Talk</a>
+
+        <div class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
