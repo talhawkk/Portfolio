@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import json
 
-from .models import SiteConfiguration, Skill, Experience, Education, ContactSubmission
+from .models import SiteConfiguration, Skill, Experience, Education, ContactSubmission, Certification
 from apps.projects.models import Project
 from apps.blog.models import BlogPost
 
@@ -31,6 +31,7 @@ def about(request):
         'skills_by_category': {},
         'experiences': Experience.objects.all(),
         'education': Education.objects.all(),
+        'certifications': Certification.objects.all(),
     }
     # Group skills by category
     for skill in Skill.objects.all():

@@ -10,8 +10,7 @@
         </div>
         <div class="reveal">
             <div class="project-card__techs" style="margin-bottom:var(--space-md);">
-                {% for tech in project.technologies.all %}<span class="tag"
-                    style="border-color:{{tech.color}}40;color:{{tech.color}};">{{tech.name}}</span>{% endfor %}
+                {% for tech in project.technologies.all %}<span class="tag" data-color="{{tech.color}}">{{tech.name}}</span>{% endfor %}
             </div>
             <h1 style="font-size:var(--fs-h1);margin-bottom:var(--space-sm);">{{project.title}}</h1>
             <p style="font-size:var(--fs-body);color:var(--text-secondary);max-width:700px;">{{project.description}}</p>

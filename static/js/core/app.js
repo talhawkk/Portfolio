@@ -36,5 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+    // Dynamic tag coloring from data-color attribute
+    const dynamicTags = document.querySelectorAll('.tag[data-color]');
+    dynamicTags.forEach(tag => {
+        const color = tag.getAttribute('data-color');
+        if (color) {
+            tag.style.borderColor = color + '40'; // 40 = 25% alpha in hex
+            tag.style.color = color;
+        }
     });
 });

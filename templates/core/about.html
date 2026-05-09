@@ -9,37 +9,38 @@
 <section class="about-hero" id="about-hero">
     <div class="container">
         <div class="about-preview" style="padding-top: var(--nav-height);">
-            <div class="about-preview__text reveal">
-                <span class="section__label">About Me</span>
-                <h1>{{ site_config.full_name|default:"Talha Abbas" }}</h1>
-                <h3 style="color: var(--accent-primary); margin-bottom: var(--space-md); font-weight: var(--fw-medium);">{{ site_config.title|default:"Full-Stack Engineer & AI Developer" }}</h3>
-                <p>{{ site_config.detailed_bio|default:site_config.bio|default:"I'm a passionate software engineer with a deep focus on building scalable, production-grade systems. My expertise spans full-stack web development, AI/ML integration, and enterprise architecture." }}</p>
-                <p>I believe in writing clean, maintainable code that not only works but tells a story. Every project I take on is an opportunity to push boundaries and create something meaningful.</p>
-
-                {% if site_config.resume_file %}
-                <a href="{{ site_config.resume_file.url }}" class="btn btn--primary" download data-cursor-hover>
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download Resume
-                </a>
+            <div class="about-hero__image reveal">
+                {% if site_config.profile_image %}
+                <img src="{{ site_config.profile_image.url }}" alt="{{ site_config.full_name }}">
+                {% else %}
+                <div style="width:100%; height:100%; background:var(--bg-tertiary); display:flex; align-items:center; justify-content:center; font-size:4rem;">👤</div>
                 {% endif %}
             </div>
 
-            <div class="stats-grid reveal" style="grid-template-columns: repeat(2, 1fr);">
-                <div class="stat-card">
-                    <div class="stat-card__number" data-count="{{ site_config.years_experience|default:3 }}">0</div>
-                    <div class="stat-card__label">Years Exp.</div>
+            <div class="about-hero__content">
+                <div class="about-preview__text reveal">
+                    <span class="section__label">About Me</span>
+                    <h1>{{ site_config.full_name|default:"Talha Abbas" }}</h1>
+                    <h3 style="color: var(--accent-primary); margin-bottom: var(--space-md); font-weight: var(--fw-medium);">{{ site_config.title|default:"Full-Stack Engineer & AI Developer" }}</h3>
+                    <p>{{ site_config.detailed_bio|default:site_config.bio|default:"I'm a passionate software engineer with a deep focus on building scalable, production-grade systems." }}</p>
+                    
+                    {% if site_config.resume_file %}
+                    <a href="{{ site_config.resume_file.url }}" class="btn btn--primary" download data-cursor-hover style="margin-bottom: var(--space-lg);">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download Resume
+                    </a>
+                    {% endif %}
                 </div>
-                <div class="stat-card">
-                    <div class="stat-card__number" data-count="{{ site_config.projects_completed|default:10 }}">0</div>
-                    <div class="stat-card__label">Projects</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card__number" data-count="{{ site_config.technologies_used|default:20 }}">0</div>
-                    <div class="stat-card__label">Technologies</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card__number" data-count="99">0</div>
-                    <div class="stat-card__label">Satisfaction %</div>
+
+                <div class="stats-grid reveal" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="stat-card">
+                        <div class="stat-card__number" data-count="{{ site_config.years_experience|default:3 }}">0</div>
+                        <div class="stat-card__label">Years Exp.</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__number" data-count="{{ site_config.projects_completed|default:10 }}">0</div>
+                        <div class="stat-card__label">Projects</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +128,50 @@
         </div>
     </div>
 </section>
+
+
+<!-- Certifications -->
+{% if certifications %}
+<section class="section" id="certifications-section">
+    <div class="container container--narrow">
+        <div class="section__header reveal">
+            <span class="section__label">Verified</span>
+            <h2 class="section__title">Certifications</h2>
+        </div>
+
+        <div class="certifications-grid">
+            {% for cert in certifications %}
+            <div class="glass-card reveal" style="padding: var(--space-md); margin-bottom: var(--space-md);">
+                <div style="display: flex; gap: var(--space-md); align-items: center;">
+                    {% if cert.badge_image %}
+                    <div style="width: 60px; height: 60px; flex-shrink: 0;">
+                        <img src="{{ cert.badge_image.url }}" alt="{{ cert.name }}" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    {% else %}
+                    <div style="width: 60px; height: 60px; flex-shrink: 0; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); font-size: 1.5rem;">📜</div>
+                    {% endif %}
+                    
+                    <div style="flex-grow: 1;">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 4px;">{{ cert.name }}</h3>
+                        <p style="font-size: 0.9rem; color: var(--accent-primary); margin-bottom: 4px;">{{ cert.issuing_organization }}</p>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+                            Issued {{ cert.issue_date|date:"M Y" }}
+                            {% if cert.credential_id %} · ID: {{ cert.credential_id }}{% endif %}
+                        </div>
+                    </div>
+
+                    {% if cert.credential_url %}
+                    <a href="{{ cert.credential_url }}" target="_blank" class="btn btn--ghost" style="padding: 8px;" data-cursor-hover title="Verify Credential">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 
 
 <!-- CTA -->
