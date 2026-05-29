@@ -37,9 +37,14 @@
                 {% if project.results %}<h2>Results & Impact</h2>
                 <p>{{project.results|linebreaksbr}}</p>{% endif %}
                 {% if project.images.all %}<h2>Gallery</h2>
-                <div class="project-gallery">{% for img in project.images.all %}<div class="project-gallery__item"><img
-                            src="{{img.image.url}}" alt="{{img.caption|default:project.title}}" loading="lazy"></div>{%
-                    endfor %}</div>{% endif %}
+                <div class="project-gallery">
+                    {% for img in project.images.all %}
+                        <div class="project-gallery__item">
+                            <img src="{{img.image.url}}" alt="{{img.caption|default:project.title}}" loading="lazy">
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
             <aside class="project-detail__sidebar reveal">
                 <div class="project-detail__info-card">
@@ -53,8 +58,9 @@
                     </div>
                     <div class="project-detail__info-item">
                         <div class="project-detail__info-label">Technologies</div>
-                        <div class="project-detail__info-value">{% for tech in project.technologies.all
-                            %}{{tech.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                        <div class="project-detail__info-value">
+                            {% for tech in project.technologies.all %}{{tech.name}}{% if not forloop.last %}, {% endif %}{% endfor %}
+                        </div>
                     </div>
                     {% if project.live_url %}<div class="project-detail__info-item">
                         <div class="project-detail__info-label">Live URL</div>

@@ -9,7 +9,9 @@
     if (!preloader || !counter || !progress) return;
 
     let count = 0;
-    const duration = 1500; // 1.5 seconds
+    // Snappy loading: faster if already seen in this session
+    const hasSeenPreloader = sessionStorage.getItem('preloaderSeen');
+    const duration = hasSeenPreloader ? 300 : 600; 
     const interval = duration / 100;
 
     const timer = setInterval(() => {
@@ -19,14 +21,14 @@
 
         if (count >= 100) {
             clearInterval(timer);
+            sessionStorage.setItem('preloaderSeen', 'true');
             setTimeout(() => {
                 preloader.style.opacity = '0';
-                // Trigger hero animations after preloader
                 document.dispatchEvent(new CustomEvent('preloaderComplete'));
                 setTimeout(() => {
                     preloader.style.display = 'none';
-                }, 600);
-            }, 300);
+                }, 400);
+            }, 100);
         }
     }, interval);
 
