@@ -3,8 +3,9 @@
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
     <div class="navbar__inner">
-        <a href="{% url 'core:home' %}" class="navbar__logo">
-            {{ site_config.full_name|default:"Talha Abbas" }}
+        <a href="{% url 'core:home' %}" class="navbar__logo" data-cursor-hover>
+            <span class="navbar__logo-mark">TA</span>
+            <span class="navbar__logo-text">{{ site_config.full_name|default:"Talha Abbas" }}</span>
         </a>
 
         <div class="navbar__links" id="navbar-links">
@@ -15,7 +16,7 @@
             <a href="{% url 'core:contact' %}" class="navbar__link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
         </div>
 
-        <a href="{% url 'core:contact' %}" class="btn btn--outline navbar__cta">Let's Talk</a>
+        <a href="{% url 'core:contact' %}" class="btn btn--outline navbar__cta" data-cursor-hover>Let's Talk</a>
 
         <div class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
             <span></span>

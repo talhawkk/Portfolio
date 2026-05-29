@@ -5,15 +5,21 @@
 {% block content %}
 <article class="blog-detail">
     <header class="blog-detail__header reveal">
-        <a href="{% url 'blog:list' %}" class="btn btn--ghost" style="margin-bottom:var(--space-md);">← Back to Blog</a>
+        <a href="{% url 'blog:list' %}" class="btn btn--ghost detail-backlink">&larr; Back to Blog</a>
         <div class="blog-detail__meta">
             {% if post.category %}<span style="color:var(--accent-primary);">{{post.category.name}}</span><span>·</span>{% endif %}
             <span>{{post.reading_time}} min read</span><span>·</span><span>{{post.published_date|date:"M d, Y"}}</span>
         </div>
-        <h1 style="font-size:var(--fs-h1);">{{post.title}}</h1>
-        {% if post.tags.all %}<div style="display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-top:var(--space-md);justify-content:center;">{% for tag in post.tags.all %}<span class="tag">{{tag.name}}</span>{% endfor %}</div>{% endif %}
+        <h1 class="blog-detail__title">{{post.title}}</h1>
+        {% if post.tags.all %}<div class="blog-detail__tags">{% for tag in post.tags.all %}<span class="tag">{{tag.name}}</span>{% endfor %}</div>{% endif %}
     </header>
-    {% if post.featured_image %}<div class="blog-detail__featured-image reveal"><img src="{{post.featured_image.url}}" alt="{{post.title}}"></div>{% endif %}
+    <div class="blog-detail__featured-image reveal">
+        {% if post.featured_image %}
+        <img src="{{post.featured_image.url}}" alt="{{post.title}}">
+        {% else %}
+        <div class="visual-placeholder visual-placeholder--article"><span>{{ post.title|slice:":2"|upper }}</span></div>
+        {% endif %}
+    </div>
     <div class="blog-detail__content reveal">{{post.content|safe}}</div>
 </article>
 {% if related_posts %}

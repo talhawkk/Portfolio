@@ -33,16 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             status.style.display = 'block';
             if (data.success) {
-                status.textContent = '✅ ' + data.message;
+                status.textContent = data.message;
                 status.style.color = 'var(--success)';
                 form.reset();
             } else {
-                status.textContent = '❌ ' + (data.message || 'Something went wrong.');
+                status.textContent = data.message || 'Something went wrong.';
                 status.style.color = 'var(--error)';
             }
         } catch (err) {
             status.style.display = 'block';
-            status.textContent = '❌ Network error. Please try again.';
+            status.textContent = 'Network error. Please try again.';
             status.style.color = 'var(--error)';
         } finally {
             submitBtn.disabled = false;

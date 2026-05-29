@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+    });
+
     // Dynamic tag coloring from data-color attribute
     const dynamicTags = document.querySelectorAll('.tag[data-color]');
     dynamicTags.forEach(tag => {

@@ -2,27 +2,31 @@
 {% load static %}
 {% block title %}{{ project.title }} — {{ site_config.full_name }}{% endblock %}
 {% block content %}
-<section class="project-hero">
+<section class="project-hero project-hero--case">
     <div class="container">
         <div class="reveal">
-            <a href="{% url 'projects:list' %}" class="btn btn--ghost" style="margin-bottom:var(--space-md);">← Back to
-                Projects</a>
+            <a href="{% url 'projects:list' %}" class="btn btn--ghost detail-backlink">&larr; Back to Projects</a>
         </div>
-        <div class="reveal">
-            <div class="project-card__techs" style="margin-bottom:var(--space-md);">
+        <div class="project-hero__content reveal">
+            <div class="project-card__techs project-hero__techs">
                 {% for tech in project.technologies.all %}<span class="tag" data-color="{{tech.color}}">{{tech.name}}</span>{% endfor %}
             </div>
-            <h1 style="font-size:var(--fs-h1);margin-bottom:var(--space-sm);">{{project.title}}</h1>
-            <p style="font-size:var(--fs-body);color:var(--text-secondary);max-width:700px;">{{project.description}}</p>
-            <div style="display:flex;gap:var(--space-md);margin-top:var(--space-lg);">
+            <h1 class="project-hero__title">{{project.title}}</h1>
+            <p class="project-hero__description">{{project.description}}</p>
+            <div class="project-hero__actions">
                 {% if project.live_url %}<a href="{{project.live_url}}" target="_blank" class="btn btn--primary"
                     data-cursor-hover>Live Demo</a>{% endif %}
                 {% if project.github_url %}<a href="{{project.github_url}}" target="_blank" class="btn btn--outline"
                     data-cursor-hover>Source Code</a>{% endif %}
             </div>
         </div>
-        {% if project.featured_image %}<div class="project-hero__image reveal"><img src="{{project.featured_image.url}}"
-                alt="{{project.title}}"></div>{% endif %}
+        <div class="project-hero__image reveal">
+            {% if project.featured_image %}
+            <img src="{{project.featured_image.url}}" alt="{{project.title}}">
+            {% else %}
+            <div class="visual-placeholder visual-placeholder--project"><span>{{ project.title|slice:":2"|upper }}</span></div>
+            {% endif %}
+        </div>
     </div>
 </section>
 <section class="section" style="padding-top:0;">
@@ -65,7 +69,7 @@
                     {% if project.live_url %}<div class="project-detail__info-item">
                         <div class="project-detail__info-label">Live URL</div>
                         <div class="project-detail__info-value"><a href="{{project.live_url}}" target="_blank"
-                                style="color:var(--accent-primary);">Visit →</a></div>
+                                style="color:var(--accent-primary);">Visit &rarr;</a></div>
                     </div>{% endif %}
                 </div>
             </aside>
@@ -80,9 +84,7 @@
         <div class="projects-grid">{% for rp in related_projects %}<a href="{% url 'projects:detail' rp.slug %}"
                 class="project-card reveal">
                 <div class="project-card__image">{% if rp.featured_image %}<img src="{{rp.featured_image.url}}"
-                        alt="{{rp.title}}" loading="lazy">{% else %}<div
-                        style="width:100%;height:100%;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;font-size:3rem;">
-                        🚀</div>{% endif %}</div>
+                        alt="{{rp.title}}" loading="lazy">{% else %}<div class="visual-placeholder visual-placeholder--project"><span>{{ rp.title|slice:":2"|upper }}</span></div>{% endif %}</div>
                 <div class="project-card__body">
                     <h3 class="project-card__title">{{rp.title}}</h3>
                     <p class="project-card__tagline">{{rp.tagline}}</p>

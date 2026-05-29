@@ -2,14 +2,28 @@
 {% load static %}
 {% block title %}Blog — {{ site_config.full_name }}{% endblock %}
 {% block content %}
-<section class="page-header">
+<section class="page-header page-header--insights">
     <div class="container">
         <span class="section__label reveal">Insights</span>
         <h1 class="page-header__title reveal">The <span class="text-gradient">Blog</span></h1>
-        <p class="page-header__subtitle reveal">Thoughts on engineering, architecture, and building at scale.</p>
+        <p class="page-header__subtitle reveal">Notes on software architecture, product execution, AI systems, and the decisions behind reliable engineering.</p>
+        <div class="page-header__meta-grid reveal">
+            <div class="page-header__meta-card">
+                <strong>{{ blog_stats.posts|default:0 }}</strong>
+                <span>Published</span>
+            </div>
+            <div class="page-header__meta-card">
+                <strong>{{ blog_stats.categories|default:0 }}</strong>
+                <span>Categories</span>
+            </div>
+            <div class="page-header__meta-card">
+                <strong>{{ blog_stats.featured|default:0 }}</strong>
+                <span>Featured</span>
+            </div>
+        </div>
     </div>
 </section>
-<section class="section" style="padding-top:0;">
+<section class="section insights-index" style="padding-top:0;">
     <div class="container">
         {% if categories %}
         <div class="filter-tabs reveal">
@@ -22,7 +36,15 @@
         <div class="blog-grid">
             {% for post in posts %}
             <a href="{% url 'blog:detail' post.slug %}" class="blog-card reveal" data-cursor-hover>
-                {% if post.featured_image %}<div class="blog-card__image"><img src="{{post.featured_image.url}}" alt="{{post.title}}" loading="lazy"></div>{% endif %}
+                <div class="blog-card__image">
+                    {% if post.featured_image %}
+                    <img src="{{post.featured_image.url}}" alt="{{post.title}}" loading="lazy">
+                    {% else %}
+                    <div class="visual-placeholder visual-placeholder--article">
+                        <span>{{ post.title|slice:":2"|upper }}</span>
+                    </div>
+                    {% endif %}
+                </div>
                 <div class="blog-card__body">
                     <div class="blog-card__meta">
                         {% if post.category %}<span class="blog-card__category">{{post.category.name}}</span><span>·</span>{% endif %}
@@ -33,7 +55,7 @@
                 </div>
             </a>
             {% empty %}
-            <div class="empty-state" style="grid-column:1/-1;"><div class="empty-state__icon">📝</div><p class="empty-state__text">Blog posts will appear here once published via the admin panel.</p></div>
+            <div class="empty-state" style="grid-column:1/-1;"><div class="empty-state__icon">IN</div><p class="empty-state__text">Blog posts will appear here once published via the admin panel.</p></div>
             {% endfor %}
         </div>
     </div>

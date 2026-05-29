@@ -5,11 +5,11 @@
 
 {% block content %}
 
-<section class="page-header">
+<section class="page-header page-header--contact">
     <div class="container">
         <span class="section__label reveal">Get in Touch</span>
         <h1 class="page-header__title reveal">Let's <span class="text-gradient">Connect</span></h1>
-        <p class="page-header__subtitle reveal">Have a project in mind, a question, or just want to say hello? I'd love to hear from you.</p>
+        <p class="page-header__subtitle reveal">Bring a serious product problem, an AI workflow, or a production system that needs sharper engineering.</p>
     </div>
 </section>
 
@@ -17,8 +17,9 @@
     <div class="container">
         <div class="contact-layout">
             <!-- Contact Info -->
-            <div class="reveal">
-                <h3 style="margin-bottom: var(--space-lg);">Contact Information</h3>
+            <div class="contact-panel reveal">
+                <span class="contact-panel__eyebrow">Direct channel</span>
+                <h3 class="contact-panel__title">Contact Information</h3>
 
                 <div class="contact-info__item">
                     <div class="contact-info__icon">
@@ -50,8 +51,8 @@
                     </div>
                 </div>
 
-                <div style="margin-top: var(--space-xl);">
-                    <h4 style="margin-bottom: var(--space-md); color: var(--text-secondary);">Find me on</h4>
+                <div class="contact-panel__socials">
+                    <h4>Find me on</h4>
                     <div class="footer__socials">
                         {% if site_config.github_url %}
                         <a href="{{ site_config.github_url }}" target="_blank" class="footer__social-link" data-cursor-hover>
@@ -68,9 +69,13 @@
             </div>
 
             <!-- Contact Form -->
-            <div class="reveal">
+            <div class="contact-form-card reveal">
                 <form class="contact-form" id="contact-form" method="POST" action="{% url 'core:contact' %}">
                     {% csrf_token %}
+                    <div class="contact-form__header">
+                        <span>Project brief</span>
+                        <strong>Tell me what needs to be built.</strong>
+                    </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -89,10 +94,10 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" placeholder="Tell me about your project..." rows="6" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn--primary" data-cursor-hover id="contact-submit">
+                    <button type="submit" class="btn btn--primary contact-form__submit" data-cursor-hover id="contact-submit">
                         Send Message
                     </button>
-                    <div id="form-status" style="display:none; margin-top: var(--space-sm); font-size: var(--fs-small);"></div>
+                    <div id="form-status" class="form-status" style="display:none;"></div>
                 </form>
             </div>
         </div>

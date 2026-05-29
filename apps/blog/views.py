@@ -15,6 +15,11 @@ def blog_list(request):
         'posts': posts,
         'categories': Category.objects.all(),
         'active_category': category_filter,
+        'blog_stats': {
+            'posts': BlogPost.objects.filter(is_published=True).count(),
+            'categories': Category.objects.count(),
+            'featured': BlogPost.objects.filter(is_published=True, is_featured=True).count(),
+        },
     }
     return render(request, 'blog/blog_list.html', context)
 

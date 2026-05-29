@@ -49,7 +49,7 @@ function initGSAPAnimations() {
     });
 
     // Skill bar animations
-    const skillBars = document.querySelectorAll('.skill-item__bar-fill');
+    const skillBars = document.querySelectorAll('.skill-item__bar-fill, .skill-chip__bar-fill, .skill-cluster__meter-fill');
     skillBars.forEach(bar => {
         const width = bar.getAttribute('data-width') || 80;
         gsap.to(bar, {
@@ -57,8 +57,27 @@ function initGSAPAnimations() {
             duration: 1.5,
             ease: 'power3.out',
             scrollTrigger: {
-                trigger: bar,
+                trigger: bar.closest('.skill-chip, .skill-cluster, .skill-item') || bar,
                 start: 'top 90%',
+                toggleActions: 'play none none none',
+            }
+        });
+    });
+
+    // Premium stagger for dense skill chips
+    document.querySelectorAll('.skill-cluster').forEach(cluster => {
+        const chips = cluster.querySelectorAll('.skill-chip');
+        if (!chips.length) return;
+
+        gsap.from(chips, {
+            y: 22,
+            opacity: 0,
+            duration: 0.65,
+            ease: 'power3.out',
+            stagger: 0.045,
+            scrollTrigger: {
+                trigger: cluster,
+                start: 'top 78%',
                 toggleActions: 'play none none none',
             }
         });

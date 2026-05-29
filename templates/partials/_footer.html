@@ -3,9 +3,17 @@
 <!-- Footer -->
 <footer class="footer">
     <div class="container">
+        <div class="footer__top">
+            <div>
+                <span class="footer__eyebrow">Available for serious builds</span>
+                <h2 class="footer__title">Let's turn the next idea into a durable product.</h2>
+            </div>
+            <a href="{% url 'core:contact' %}" class="btn btn--primary" data-cursor-hover>Start a Project</a>
+        </div>
+
         <div class="footer__inner">
             <p class="footer__copyright">
-                &copy; {{ site_config.full_name|default:"Talha Abbas" }} {{ "now"|date:"Y" }} — Crafted with precision.
+                &copy; {{ site_config.full_name|default:"Talha Abbas" }} {{ "now"|date:"Y" }}. Designed, engineered, and maintained with care.
             </p>
 
             <div class="footer__socials">
