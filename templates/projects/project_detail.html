@@ -33,10 +33,24 @@
     <div class="container">
         <div class="project-detail__content">
             <div class="project-detail__main reveal">
-                {% if project.challenge %}<h2>The Challenge</h2>
-                <p>{{project.challenge|linebreaksbr}}</p>{% endif %}
-                {% if project.solution %}<h2>The Solution</h2>
-                <p>{{project.solution|linebreaksbr}}</p>{% endif %}
+                {% if project.challenge %}
+                <div class="project-detail__section">
+                    <h2>The Challenge</h2>
+                    <div class="expandable-content" id="challenge-content">
+                        {{ project.challenge|linebreaks }}
+                    </div>
+                    <button class="btn btn--outline btn--small read-more-btn" onclick="toggleExpand('challenge-content', this)">Read More &darr;</button>
+                </div>
+                {% endif %}
+                {% if project.solution %}
+                <div class="project-detail__section">
+                    <h2>The Solution</h2>
+                    <div class="expandable-content" id="solution-content">
+                        {{ project.solution|linebreaks }}
+                    </div>
+                    <button class="btn btn--outline btn--small read-more-btn" onclick="toggleExpand('solution-content', this)">Read More &darr;</button>
+                </div>
+                {% endif %}
                 {% if project.detailed_description %}
                 <div class="project-detail__section">
                     <h2>Deep Dive</h2>
@@ -46,8 +60,15 @@
                     <button class="btn btn--outline btn--small read-more-btn" onclick="toggleExpand('deep-dive-content', this)">Read More &darr;</button>
                 </div>
                 {% endif %}
-                {% if project.results %}<h2>Results & Impact</h2>
-                <p>{{project.results|linebreaksbr}}</p>{% endif %}
+                {% if project.results %}
+                <div class="project-detail__section">
+                    <h2>Results & Impact</h2>
+                    <div class="expandable-content" id="results-content">
+                        {{ project.results|linebreaks }}
+                    </div>
+                    <button class="btn btn--outline btn--small read-more-btn" onclick="toggleExpand('results-content', this)">Read More &darr;</button>
+                </div>
+                {% endif %}
                 {% if project.images.all %}<h2>Gallery</h2>
                 <div class="project-gallery">
                     {% for img in project.images.all %}
@@ -119,15 +140,17 @@
     }
     
     document.addEventListener('DOMContentLoaded', () => {
-        const content = document.getElementById('deep-dive-content');
-        const btn = document.querySelector('.read-more-btn');
-        if (content && btn) {
-            // Check if content naturally fits within max-height (e.g. 300px)
-            if (content.scrollHeight <= 320) {
-                btn.style.display = 'none';
-                content.classList.add('expanded'); // remove fade
+        const contents = document.querySelectorAll('.expandable-content');
+        contents.forEach(content => {
+            const btn = content.parentElement.querySelector('.read-more-btn');
+            if (btn) {
+                // Check if content naturally fits within max-height (280px + buffer)
+                if (content.scrollHeight <= 300) {
+                    btn.style.display = 'none';
+                    content.classList.add('expanded'); // remove fade
+                }
             }
-        }
+        });
     });
 </script>
 {% endblock %}

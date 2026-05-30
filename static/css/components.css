@@ -603,6 +603,38 @@
     line-height: var(--lh-relaxed);
 }
 
+/* ── Expandable Content ── */
+.expandable-content {
+    max-height: 280px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.4s ease-out;
+}
+
+.expandable-content::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, var(--bg-body) 10%, transparent);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.expandable-content.expanded {
+    max-height: 5000px; /* arbitrary large value */
+}
+
+.expandable-content.expanded::after {
+    opacity: 0;
+}
+
+.read-more-btn {
+    margin-top: var(--space-md);
+}
+
 /* ── Stats ── */
 .stats-grid {
     display: grid;
