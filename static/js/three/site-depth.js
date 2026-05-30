@@ -32,12 +32,12 @@
     const lineMaterial = new THREE.LineBasicMaterial({
         color: 0x2dd4bf,
         transparent: true,
-        opacity: isSmallScreen ? 0.035 : 0.06,
+        opacity: isSmallScreen ? 0.08 : 0.15, // Increased opacity
     });
     const accentMaterial = new THREE.LineBasicMaterial({
         color: 0xfacc15,
         transparent: true,
-        opacity: isSmallScreen ? 0.045 : 0.08,
+        opacity: isSmallScreen ? 0.1 : 0.18, // Increased opacity
     });
 
     const span = isSmallScreen ? 28 : 40;
@@ -85,10 +85,10 @@
     const nodeGeometry = new THREE.BufferGeometry();
     nodeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const nodeMaterial = new THREE.PointsMaterial({
-        color: 0x38bdf8,
-        size: isSmallScreen ? 0.035 : 0.045,
+        color: 0x5eead4,
+        size: isSmallScreen ? 0.045 : 0.06, // Slightly larger particles
         transparent: true,
-        opacity: isSmallScreen ? 0.18 : 0.28,
+        opacity: isSmallScreen ? 0.4 : 0.6, // Increased opacity
         blending: THREE.AdditiveBlending,
     });
     root.add(new THREE.Points(nodeGeometry, nodeMaterial));
@@ -121,7 +121,10 @@
 
         root.rotation.y += (targetX - root.rotation.y) * 0.035;
         root.rotation.x += (targetY - root.rotation.x) * 0.035;
-        root.position.y = -1.8 + Math.sin(t * 0.45) * 0.12 + scrollCurrent * 0.0009;
+        
+        // Fly through space effect
+        root.position.z = scrollCurrent * 0.012;
+        root.position.y = -1.8 + Math.sin(t * 0.45) * 0.12 + scrollCurrent * 0.0015;
 
         grid.rotation.y = Math.sin(t * 0.18) * 0.03;
         frameGroup.children.forEach((frame, index) => {

@@ -137,7 +137,7 @@
     }
 
     .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
+        /* Let auto-fit handle it */
     }
 
     .blog-grid {
@@ -168,7 +168,7 @@
 /* ── Desktops (1440px+) ── */
 @media (min-width: 1440px) {
     .projects-grid {
-        grid-template-columns: repeat(3, 1fr);
+        /* Let auto-fit handle it */
     }
 
     .blog-grid {

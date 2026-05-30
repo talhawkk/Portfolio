@@ -2,7 +2,7 @@
  * App.js — Main initialization
  */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c⚡ Portfolio Loaded', 'color: #00d4ff; font-size: 16px; font-weight: bold;');
+    console.log('%c⚡ Portfolio Loaded', 'color: #2dd4bf; font-size: 16px; font-weight: bold;');
 
     // Lazy load images
     if ('IntersectionObserver' in window) {

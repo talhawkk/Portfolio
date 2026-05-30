@@ -73,7 +73,7 @@
         const linesGeometry = new THREE.BufferGeometry();
         linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
         const linesMaterial = new THREE.LineBasicMaterial({
-            color: 0x38bdf8,
+            color: 0x5eead4,
             transparent: true,
             opacity: 0.08,
         });

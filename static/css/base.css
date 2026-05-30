@@ -23,11 +23,11 @@
     --text-tertiary: #656585;
     --text-muted: #4a4a68;
 
-    --accent-primary: #00d4ff;
-    --accent-secondary: #7b61ff;
-    --accent-tertiary: #ff6b9d;
-    --accent-gradient: linear-gradient(135deg, #00d4ff 0%, #7b61ff 50%, #ff6b9d 100%);
-    --accent-gradient-subtle: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(123,97,255,0.15));
+    --accent-primary: #2dd4bf;
+    --accent-secondary: #14b8a6;
+    --accent-tertiary: #f59e0b;
+    --accent-gradient: linear-gradient(135deg, #5eead4 0%, #2dd4bf 50%, #0ea5e9 100%);
+    --accent-gradient-subtle: linear-gradient(135deg, rgba(45,212,191,0.15), rgba(20,184,166,0.15));
 
     --success: #00e68a;
     --warning: #ffb347;
@@ -100,8 +100,8 @@
     --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
     --shadow-xl: 0 16px 60px rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.15);
-    --shadow-glow-strong: 0 0 50px rgba(0, 212, 255, 0.25);
+    --shadow-glow: 0 0 30px rgba(45, 212, 191, 0.15);
+    --shadow-glow-strong: 0 0 50px rgba(45, 212, 191, 0.25);
 
     /* Transitions */
     --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -224,7 +224,7 @@ p {
 
 /* ── Selection ── */
 ::selection {
-    background: rgba(0, 212, 255, 0.3);
+    background: rgba(45, 212, 191, 0.3);
     color: var(--text-primary);
 }
 
@@ -285,9 +285,9 @@ p {
     color: var(--accent-primary);
     margin-bottom: var(--space-sm);
     padding: var(--space-2xs) var(--space-sm);
-    border: 1px solid rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(45, 212, 191, 0.2);
     border-radius: var(--radius-sm);
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(45, 212, 191, 0.05);
 }
 
 .section__title {
@@ -345,7 +345,7 @@ p {
 .btn--outline:hover {
     border-color: var(--accent-primary);
     color: var(--accent-primary);
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(45, 212, 191, 0.05);
     transform: translateY(-2px);
 }
 
@@ -382,7 +382,7 @@ p {
 .tag:hover {
     border-color: var(--accent-primary);
     color: var(--accent-primary);
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(45, 212, 191, 0.05);
 }
 
 /* ── Utility: Dividers ── */
@@ -559,7 +559,7 @@ p {
 .cursor.hover {
     width: 50px;
     height: 50px;
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(45, 212, 191, 0.1);
     border-color: var(--accent-secondary);
 }
 
