@@ -61,6 +61,7 @@
     
     const positions = new Float32Array(nodeCount * 3);
     const velocities = new Float32Array(nodeCount * 3);
+    const phases = new Float32Array(nodeCount);
     
     for (let i = 0; i < nodeCount; i++) {
         const i3 = i * 3;
@@ -72,6 +73,8 @@
         velocities[i3] = (Math.random() - 0.5) * 0.008;
         velocities[i3 + 1] = (Math.random() - 0.5) * 0.008;
         velocities[i3 + 2] = (Math.random() - 0.5) * 0.008;
+
+        phases[i] = Math.random() * Math.PI * 2;
     }
 
     const nodeGeometry = new THREE.BufferGeometry();
@@ -104,7 +107,8 @@
     const lines = new THREE.LineSegments(lineGeometry, lineMat);
     root.add(lines);
 
-    const colorBase = new THREE.Color(0x2dd4bf);
+    const colorBase = new THREE.Color(0x2dd4bf); // Teal
+    const colorAlt = new THREE.Color(0x6366f1);  // Indigo / Purple
 
     let targetX = 0;
     let targetY = 0;
@@ -145,7 +149,8 @@
         const pos = nodeGeometry.attributes.position.array;
         for(let i=0; i<nodeCount; i++) {
             pos[i*3] += velocities[i*3];
-            pos[i*3+1] += velocities[i*3+1];
+            // Add organic breathing
+            pos[i*3+1] += velocities[i*3+1] + Math.sin(t * 0.5 + phases[i]) * 0.006;
             pos[i*3+2] += velocities[i*3+2];
             
             // Gentle bounds bouncing
@@ -169,8 +174,20 @@
                 if ( dist < maxDistance ) {
                     // Exponential falloff for softer blending
                     const alpha = Math.pow(1.0 - ( dist / maxDistance ), 2.0);
-                    const intensity = alpha * 0.08; // Extremely subtle line opacity
+                    const intensity = alpha * 0.12; // Slightly boosted for gradient visibility
                     
+                    // Gradient interpolation based on X position
+                    const mixRatio1 = Math.max(0, Math.min(1, (pos[i*3] + span*0.5) / span));
+                    const mixRatio2 = Math.max(0, Math.min(1, (pos[j*3] + span*0.5) / span));
+                    
+                    const r1 = colorBase.r + (colorAlt.r - colorBase.r) * mixRatio1;
+                    const g1 = colorBase.g + (colorAlt.g - colorBase.g) * mixRatio1;
+                    const b1 = colorBase.b + (colorAlt.b - colorBase.b) * mixRatio1;
+
+                    const r2 = colorBase.r + (colorAlt.r - colorBase.r) * mixRatio2;
+                    const g2 = colorBase.g + (colorAlt.g - colorBase.g) * mixRatio2;
+                    const b2 = colorBase.b + (colorAlt.b - colorBase.b) * mixRatio2;
+
                     linePositions[ vertexpos++ ] = pos[i*3];
                     linePositions[ vertexpos++ ] = pos[i*3+1];
                     linePositions[ vertexpos++ ] = pos[i*3+2];
@@ -179,13 +196,13 @@
                     linePositions[ vertexpos++ ] = pos[j*3+1];
                     linePositions[ vertexpos++ ] = pos[j*3+2];
                     
-                    lineColors[ colorpos++ ] = colorBase.r * intensity;
-                    lineColors[ colorpos++ ] = colorBase.g * intensity;
-                    lineColors[ colorpos++ ] = colorBase.b * intensity;
+                    lineColors[ colorpos++ ] = r1 * intensity;
+                    lineColors[ colorpos++ ] = g1 * intensity;
+                    lineColors[ colorpos++ ] = b1 * intensity;
                     
-                    lineColors[ colorpos++ ] = colorBase.r * intensity;
-                    lineColors[ colorpos++ ] = colorBase.g * intensity;
-                    lineColors[ colorpos++ ] = colorBase.b * intensity;
+                    lineColors[ colorpos++ ] = r2 * intensity;
+                    lineColors[ colorpos++ ] = g2 * intensity;
+                    lineColors[ colorpos++ ] = b2 * intensity;
                     
                     numConnected++;
                 }
