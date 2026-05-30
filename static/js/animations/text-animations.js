@@ -32,6 +32,12 @@ function initTextAnimations() {
             y: 0,
             duration: 0.6,
         }, '-=0.45')
+        .to('#hero-showcase', {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+        }, '-=0.65')
         .to('#hero-scroll', {
             opacity: 1,
             duration: 0.6,

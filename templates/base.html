@@ -49,6 +49,9 @@
     <!-- Grid Background -->
     <div class="grid-bg"></div>
 
+    <!-- Site-wide depth layer -->
+    <canvas class="site-depth-canvas" id="site-depth-canvas" aria-hidden="true"></canvas>
+
     <!-- Navigation -->
     {% include 'partials/_navbar.html' %}
 
@@ -74,6 +77,7 @@
     <script src="{% static 'js/core/cursor.js' %}"></script>
     <script src="{% static 'js/core/navbar.js' %}"></script>
     <script src="{% static 'js/core/preloader.js' %}"></script>
+    <script src="{% static 'js/three/site-depth.js' %}"></script>
     <script src="{% static 'js/animations/gsap-animations.js' %}"></script>
     <script src="{% static 'js/animations/text-animations.js' %}"></script>
     <script src="{% static 'js/core/app.js' %}"></script>

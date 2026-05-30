@@ -15,32 +15,36 @@
     <div class="hero__orb hero__orb--1"></div>
     <div class="hero__orb hero__orb--2"></div>
 
-    <div class="container" style="padding-top: var(--nav-height);">
-        <div class="hero__content">
-            <div class="hero__label" id="hero-label">
-                <span class="dot"></span>
-                <span>Available for product, AI, and full-stack builds</span>
+    <div class="container hero__container">
+        <div class="hero__layout">
+            <div class="hero__content">
+                <div class="hero__label" id="hero-label">
+                    <span class="dot"></span>
+                    <span>Independent full-stack & AI engineer</span>
+                </div>
+
+                <h1 class="hero__title" id="hero-title">
+                    <span class="line"><span class="line-inner">Production systems</span></span>
+                    <span class="line"><span class="line-inner text-gradient">built to scale.</span></span>
+                </h1>
+
+                <p class="hero__subtitle" id="hero-subtitle">
+                    I design and engineer Django platforms, AI workflows, and cloud-backed products with sharp interfaces, resilient architecture, and launch-ready execution.
+                </p>
+
+                <div class="hero__actions" id="hero-actions">
+                    <a href="{% url 'projects:list' %}" class="btn btn--primary" data-cursor-hover>View Projects</a>
+                    <a href="{% url 'core:contact' %}" class="btn btn--outline" data-cursor-hover>Get in Touch</a>
+                </div>
+
+                <div class="hero__proof" id="hero-proof" aria-label="Professional focus areas">
+                    <span>Production Django</span>
+                    <span>AI workflows</span>
+                    <span>Cloud delivery</span>
+                </div>
             </div>
 
-            <h1 class="hero__title" id="hero-title">
-                <span class="line"><span class="line-inner">I Build Systems</span></span>
-                <span class="line"><span class="line-inner text-gradient">That Scale.</span></span>
-            </h1>
-
-            <p class="hero__subtitle" id="hero-subtitle" style="margin-top: var(--space-md);">
-                {{ site_config.subtitle|default:"Engineering premium digital experiences with cutting-edge technology. Full-stack development, AI integration, and enterprise-grade architecture." }}
-            </p>
-
-            <div class="hero__actions" id="hero-actions">
-                <a href="{% url 'projects:list' %}" class="btn btn--primary" data-cursor-hover>View Projects</a>
-                <a href="{% url 'core:contact' %}" class="btn btn--outline" data-cursor-hover>Get in Touch</a>
-            </div>
-
-            <div class="hero__proof" id="hero-proof" aria-label="Professional focus areas">
-                <span>Production Django</span>
-                <span>AI workflows</span>
-                <span>Cloud delivery</span>
-            </div>
+            <div class="hero__showcase" id="hero-showcase" aria-hidden="true"></div>
         </div>
     </div>
 

@@ -25,6 +25,27 @@ function initGSAPAnimations() {
         );
     });
 
+    // Dimensional reveal for premium surfaces.
+    const premiumSurfaces = document.querySelectorAll('.project-card, .blog-card, .contact-panel, .contact-form-card, .skill-cluster, .cert-card');
+    premiumSurfaces.forEach((surface, i) => {
+        gsap.fromTo(surface,
+            { y: 36, opacity: 0, rotationX: 4, transformPerspective: 900 },
+            {
+                y: 0,
+                opacity: 1,
+                rotationX: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: surface,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none',
+                },
+                delay: (i % 4) * 0.045,
+            }
+        );
+    });
+
     // Counter animations
     const counters = document.querySelectorAll('[data-count]');
     counters.forEach(counter => {

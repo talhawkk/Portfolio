@@ -413,6 +413,50 @@
     }
 }
 
+@media (max-width: 1180px) {
+    .hero__layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+        padding: calc(var(--nav-height) + var(--space-xl)) 0 var(--space-2xl);
+    }
+
+    .hero__content {
+        max-width: 780px;
+    }
+
+    .hero__showcase {
+        min-height: 390px;
+        max-width: 620px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        min-height: auto;
+    }
+
+    .hero__canvas {
+        opacity: 0.32;
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 32%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000 32%, transparent 100%);
+    }
+
+    .hero__layout {
+        min-height: auto;
+        padding-bottom: var(--space-xl);
+    }
+
+    .hero__showcase {
+        display: none;
+    }
+
+    .hero__scroll-indicator {
+        display: none;
+    }
+}
+
 .skills-lab {
     overflow: hidden;
     isolation: isolate;

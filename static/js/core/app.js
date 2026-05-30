@@ -47,4 +47,37 @@ document.addEventListener('DOMContentLoaded', () => {
             tag.style.color = color;
         }
     });
+
+    // Subtle pointer-following light and depth for premium surfaces.
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (canHover && !reduceMotion) {
+        const depthTargets = document.querySelectorAll(
+            '.project-card, .blog-card, .skill-chip, .skill-item, .stat-card, .contact-panel, .contact-form, .cert-card, .project-detail__info-card'
+        );
+
+        depthTargets.forEach((target) => {
+            target.classList.add('depth-surface');
+
+            target.addEventListener('pointermove', (event) => {
+                const rect = target.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                const px = x / rect.width;
+                const py = y / rect.height;
+                const rotateX = (0.5 - py) * 4.5;
+                const rotateY = (px - 0.5) * 5.5;
+
+                target.style.setProperty('--pointer-x', `${px * 100}%`);
+                target.style.setProperty('--pointer-y', `${py * 100}%`);
+                target.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            });
+
+            target.addEventListener('pointerleave', () => {
+                target.style.removeProperty('--pointer-x');
+                target.style.removeProperty('--pointer-y');
+                target.style.transform = '';
+            });
+        });
+    }
 });
