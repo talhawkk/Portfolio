@@ -55,43 +55,56 @@
         grid.add(new THREE.Line(vertical, lineMaterial));
     }
 
-    const frameGroup = new THREE.Group();
-    root.add(frameGroup);
-
-    const frameCount = isSmallScreen ? 3 : 5;
-    for (let i = 0; i < frameCount; i++) {
-        const size = 1.25 + i * 0.34;
-        const geometry = new THREE.BoxGeometry(size, size, size);
-        const edges = new THREE.EdgesGeometry(geometry);
-        const frame = new THREE.LineSegments(edges, i % 2 ? accentMaterial : lineMaterial);
-        frame.position.set(
-            (i - frameCount / 2) * 4.2,
-            1.4 + (i % 2) * 0.8,
-            -8 - i * 2.2
-        );
-        frame.rotation.set(i * 0.35, i * 0.22, i * 0.16);
-        frameGroup.add(frame);
-    }
-
-    const nodeCount = isSmallScreen ? 26 : 54;
+    // --- Neural Network / Plexus Effect (Subtle & Refined) ---
+    const nodeCount = isSmallScreen ? 30 : 65; // Drastically reduced for cleaner look
+    const maxDistance = isSmallScreen ? 6.0 : 8.0;
+    
     const positions = new Float32Array(nodeCount * 3);
+    const velocities = new Float32Array(nodeCount * 3);
+    
     for (let i = 0; i < nodeCount; i++) {
         const i3 = i * 3;
-        positions[i3] = (Math.random() - 0.5) * span * 1.6;
-        positions[i3 + 1] = Math.random() * 7 - 1.4;
-        positions[i3 + 2] = -Math.random() * 38;
+        positions[i3] = (Math.random() - 0.5) * span * 1.8;
+        positions[i3 + 1] = Math.random() * 14 - 3.0;
+        // Pushed far back to act strictly as a backdrop, not overlapping hero elements
+        positions[i3 + 2] = -12 - Math.random() * 40;
+        
+        velocities[i3] = (Math.random() - 0.5) * 0.008;
+        velocities[i3 + 1] = (Math.random() - 0.5) * 0.008;
+        velocities[i3 + 2] = (Math.random() - 0.5) * 0.008;
     }
 
     const nodeGeometry = new THREE.BufferGeometry();
     nodeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const nodeMaterial = new THREE.PointsMaterial({
-        color: 0x5eead4,
-        size: isSmallScreen ? 0.045 : 0.06, // Slightly larger particles
+        color: 0x2dd4bf,
+        size: isSmallScreen ? 0.03 : 0.045, // Smaller nodes
         transparent: true,
-        opacity: isSmallScreen ? 0.4 : 0.6, // Increased opacity
+        opacity: 0.3, // Much fainter
         blending: THREE.AdditiveBlending,
     });
-    root.add(new THREE.Points(nodeGeometry, nodeMaterial));
+    const nodes = new THREE.Points(nodeGeometry, nodeMaterial);
+    root.add(nodes);
+
+    // Connections
+    const maxConnections = nodeCount * nodeCount;
+    const linePositions = new Float32Array(maxConnections * 6);
+    const lineColors = new Float32Array(maxConnections * 6);
+    
+    const lineGeometry = new THREE.BufferGeometry();
+    lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+    
+    const lineMat = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+    const lines = new THREE.LineSegments(lineGeometry, lineMat);
+    root.add(lines);
+
+    const colorBase = new THREE.Color(0x2dd4bf);
 
     let targetX = 0;
     let targetY = 0;
@@ -127,10 +140,61 @@
         root.position.y = -1.8 + Math.sin(t * 0.45) * 0.12 + scrollCurrent * 0.0015;
 
         grid.rotation.y = Math.sin(t * 0.18) * 0.03;
-        frameGroup.children.forEach((frame, index) => {
-            frame.rotation.x += 0.0016 + index * 0.0002;
-            frame.rotation.y += 0.0011 + index * 0.00015;
-        });
+        
+        // Animate Plexus Network
+        const pos = nodeGeometry.attributes.position.array;
+        for(let i=0; i<nodeCount; i++) {
+            pos[i*3] += velocities[i*3];
+            pos[i*3+1] += velocities[i*3+1];
+            pos[i*3+2] += velocities[i*3+2];
+            
+            // Gentle bounds bouncing
+            if(pos[i*3] > span*0.75 || pos[i*3] < -span*0.75) velocities[i*3] *= -1;
+            if(pos[i*3+1] > 10 || pos[i*3+1] < -3) velocities[i*3+1] *= -1;
+            if(pos[i*3+2] > 2 || pos[i*3+2] < -40) velocities[i*3+2] *= -1;
+        }
+        nodeGeometry.attributes.position.needsUpdate = true;
+
+        let vertexpos = 0;
+        let colorpos = 0;
+        let numConnected = 0;
+
+        for ( let i = 0; i < nodeCount; i++ ) {
+            for ( let j = i + 1; j < nodeCount; j++ ) {
+                const dx = pos[i*3] - pos[j*3];
+                const dy = pos[i*3+1] - pos[j*3+1];
+                const dz = pos[i*3+2] - pos[j*3+2];
+                const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                
+                if ( dist < maxDistance ) {
+                    // Exponential falloff for softer blending
+                    const alpha = Math.pow(1.0 - ( dist / maxDistance ), 2.0);
+                    const intensity = alpha * 0.08; // Extremely subtle line opacity
+                    
+                    linePositions[ vertexpos++ ] = pos[i*3];
+                    linePositions[ vertexpos++ ] = pos[i*3+1];
+                    linePositions[ vertexpos++ ] = pos[i*3+2];
+                    
+                    linePositions[ vertexpos++ ] = pos[j*3];
+                    linePositions[ vertexpos++ ] = pos[j*3+1];
+                    linePositions[ vertexpos++ ] = pos[j*3+2];
+                    
+                    lineColors[ colorpos++ ] = colorBase.r * intensity;
+                    lineColors[ colorpos++ ] = colorBase.g * intensity;
+                    lineColors[ colorpos++ ] = colorBase.b * intensity;
+                    
+                    lineColors[ colorpos++ ] = colorBase.r * intensity;
+                    lineColors[ colorpos++ ] = colorBase.g * intensity;
+                    lineColors[ colorpos++ ] = colorBase.b * intensity;
+                    
+                    numConnected++;
+                }
+            }
+        }
+        
+        lineGeometry.setDrawRange( 0, numConnected * 2 );
+        lineGeometry.attributes.position.needsUpdate = true;
+        lineGeometry.attributes.color.needsUpdate = true;
 
         renderer.render(scene, camera);
     }
@@ -152,5 +216,7 @@
         accentMaterial.dispose();
         nodeGeometry.dispose();
         nodeMaterial.dispose();
+        lineGeometry.dispose();
+        lineMat.dispose();
     }, { once: true });
 })();
