@@ -1490,12 +1490,14 @@
 
     .hero__proof {
         width: 100%;
-        max-width: 340px;
+        max-width: 360px;
+        gap: 6px;
     }
 
     .hero__proof span {
-        width: 100%;
-        justify-content: center;
+        width: auto;
+        padding: 5px 10px;
+        font-size: 0.65rem;
     }
 
     .project-hero__actions .btn {

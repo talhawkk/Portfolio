@@ -56,8 +56,8 @@
     }
 
     // --- Neural Network / Plexus Effect (Subtle & Refined) ---
-    const nodeCount = isSmallScreen ? 30 : 65; // Drastically reduced for cleaner look
-    const maxDistance = isSmallScreen ? 6.0 : 8.0;
+    const nodeCount = isSmallScreen ? 55 : 65; // High node count for mobile to ensure density
+    const maxDistance = isSmallScreen ? 7.0 : 8.0;
     
     const positions = new Float32Array(nodeCount * 3);
     const velocities = new Float32Array(nodeCount * 3);
@@ -67,8 +67,10 @@
         const i3 = i * 3;
         positions[i3] = (Math.random() - 0.5) * span * 1.8;
         positions[i3 + 1] = Math.random() * 14 - 3.0;
-        // Pushed far back to act strictly as a backdrop, not overlapping hero elements
-        positions[i3 + 2] = -12 - Math.random() * 40;
+        // Bring much closer on mobile so it doesn't get lost in the deep background
+        const zStart = isSmallScreen ? -6 : -12;
+        const zDepth = isSmallScreen ? 25 : 40;
+        positions[i3 + 2] = zStart - Math.random() * zDepth;
         
         velocities[i3] = (Math.random() - 0.5) * 0.008;
         velocities[i3 + 1] = (Math.random() - 0.5) * 0.008;
@@ -81,9 +83,9 @@
     nodeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const nodeMaterial = new THREE.PointsMaterial({
         color: 0x2dd4bf,
-        size: isSmallScreen ? 0.03 : 0.045, // Smaller nodes
+        size: isSmallScreen ? 0.055 : 0.045, // Notably larger on mobile
         transparent: true,
-        opacity: 0.3, // Much fainter
+        opacity: isSmallScreen ? 0.9 : 0.3, // Almost fully opaque on mobile
         blending: THREE.AdditiveBlending,
     });
     const nodes = new THREE.Points(nodeGeometry, nodeMaterial);
@@ -174,7 +176,9 @@
                 if ( dist < maxDistance ) {
                     // Exponential falloff for softer blending
                     const alpha = Math.pow(1.0 - ( dist / maxDistance ), 2.0);
-                    const intensity = alpha * 0.12; // Slightly boosted for gradient visibility
+                    // Vastly boost line intensity specifically for mobile
+                    const baseIntensity = isSmallScreen ? 0.45 : 0.12;
+                    const intensity = alpha * baseIntensity;
                     
                     // Gradient interpolation based on X position
                     const mixRatio1 = Math.max(0, Math.min(1, (pos[i*3] + span*0.5) / span));

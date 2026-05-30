@@ -1348,7 +1348,7 @@
 
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
     .site-depth-canvas {
-        opacity: 0.28;
+        opacity: 1.0;
     }
 
     .depth-surface,
