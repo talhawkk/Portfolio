@@ -26,7 +26,7 @@
                 </h1>
 
                 <p class="hero__subtitle" id="hero-subtitle">
-                    {{ site_config.subtitle|safe }}
+                    <strong style="color: var(--text-primary); font-weight: var(--fw-medium);">{{ site_config.hero_subtitle_prefix|default:"Software Engineer" }}</strong> {{ site_config.subtitle|safe }}
                 </p>
 
                 <div class="hero__actions" id="hero-actions">

@@ -10,7 +10,8 @@ class SiteConfiguration(models.Model):
     title = models.CharField(max_length=200, default='Full-Stack Engineer & AI Developer')
     hero_title_line1 = models.CharField(max_length=100, default='I build things that', help_text='Hero section main heading (first line, normal text)')
     hero_title_line2 = models.CharField(max_length=100, default='actually work.', help_text='Hero section main heading (second line, gradient text)')
-    subtitle = models.TextField(default='<strong style="color: var(--text-primary); font-weight: var(--fw-medium);">Software Engineer</strong> — I build complete applications that solve real problems. From writing the core logic to integrating AI, I focus on making software that is reliable and actually gets the job done.', help_text='Hero section subtitle (HTML allowed)')
+    hero_subtitle_prefix = models.CharField(max_length=100, default='Software Engineer', help_text='Bold prefix text before the subtitle')
+    subtitle = models.TextField(default='— I build complete applications that solve real problems. From writing the core logic to integrating AI, I focus on making software that is reliable and actually gets the job done.', help_text='Main paragraph for hero section')
     bio = models.TextField(blank=True, help_text='Short bio for About preview section')
     detailed_bio = models.TextField(blank=True, help_text='Extended bio for the About page')
 
