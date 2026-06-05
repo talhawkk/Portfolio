@@ -85,38 +85,21 @@ function initGSAPAnimations() {
         });
     });
 
-    // Staggered fade/scale-in for skill modules inside dashboard + capsule booting
-    const skillsMonitorGrid = document.querySelector('.skills-monitor-grid');
-    if (skillsMonitorGrid) {
-        const modules = skillsMonitorGrid.querySelectorAll('.skill-module');
-        gsap.from(modules, {
-            scale: 0.94,
+    // Staggered reveal for compact skill cards
+    const compactSkillsGrid = document.querySelector('.compact-skills-grid');
+    if (compactSkillsGrid) {
+        const cards = compactSkillsGrid.querySelectorAll('.compact-skill-card');
+        gsap.from(cards, {
+            scale: 0.96,
             opacity: 0,
-            y: 16,
-            duration: 0.6,
-            ease: 'power3.out',
-            stagger: 0.05,
+            y: 12,
+            duration: 0.5,
+            ease: 'power2.out',
+            stagger: 0.04,
             scrollTrigger: {
-                trigger: skillsMonitorGrid,
+                trigger: compactSkillsGrid,
                 start: 'top 85%',
                 toggleActions: 'play none none none',
-            },
-            onComplete: () => {
-                modules.forEach(module => {
-                    const segmentsContainer = module.querySelector('.skill-module__segments');
-                    if (!segmentsContainer) return;
-                    const proficiency = parseFloat(segmentsContainer.getAttribute('data-proficiency') || 80);
-                    const activeCount = Math.round(proficiency / 20);
-                    const segments = segmentsContainer.querySelectorAll('.segment');
-                    
-                    segments.forEach((seg, index) => {
-                        if (index < activeCount) {
-                            setTimeout(() => {
-                                seg.classList.add('active');
-                            }, index * 100);
-                        }
-                    });
-                });
             }
         });
     }
