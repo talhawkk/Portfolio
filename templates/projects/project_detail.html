@@ -69,11 +69,17 @@
                     <button class="btn btn--outline btn--small read-more-btn" onclick="toggleExpand('results-content', this)">Read More &darr;</button>
                 </div>
                 {% endif %}
-                {% if project.images.all %}<h2>Gallery</h2>
-                <div class="project-gallery">
+                {% if project.images.all %}
+                <h2>Gallery</h2>
+                <div class="project-gallery" id="project-gallery">
                     {% for img in project.images.all %}
-                        <div class="project-gallery__item">
+                        <div class="project-gallery__item{% if forloop.counter > 4 %} is-hidden{% endif %}" data-index="{{ forloop.counter0 }}" data-cursor-hover>
                             <img src="{{img.image.url}}" alt="{{img.caption|default:project.title}}" loading="lazy">
+                            {% if forloop.counter == 4 and project.images.all|length > 4 %}
+                                <div class="project-gallery__overlay">
+                                    <span>+{{ project.images.all|length|add:"-3" }}</span>
+                                </div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>
@@ -105,6 +111,19 @@
         </div>
     </div>
 </section>
+
+<!-- Lightbox Modal -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Close gallery" data-cursor-hover>&times;</button>
+    <button class="lightbox__prev" aria-label="Previous image" data-cursor-hover>&larr;</button>
+    <button class="lightbox__next" aria-label="Next image" data-cursor-hover>&rarr;</button>
+    <div class="lightbox__content">
+        <img class="lightbox__image" src="" alt="">
+        <div class="lightbox__caption"></div>
+        <div class="lightbox__counter"></div>
+    </div>
+</div>
+
 {% if related_projects %}<section class="related-section">
     <div class="container">
         <div class="section__header reveal">
@@ -130,27 +149,144 @@
         content.classList.toggle('expanded');
         if (content.classList.contains('expanded')) {
             btn.innerHTML = 'Read Less &uarr;';
-            // Optional: Smooth scroll back to top of section when collapsing could go here, but simple toggle is fine.
         } else {
             btn.innerHTML = 'Read More &darr;';
-            // Scroll back slightly if collapsing
             const y = content.getBoundingClientRect().top + window.scrollY - 100;
             window.scrollTo({top: y, behavior: 'smooth'});
         }
     }
     
     document.addEventListener('DOMContentLoaded', () => {
+        // Expandable sections check
         const contents = document.querySelectorAll('.expandable-content');
         contents.forEach(content => {
             const btn = content.parentElement.querySelector('.read-more-btn');
             if (btn) {
-                // Check if content naturally fits within max-height (280px + buffer)
                 if (content.scrollHeight <= 300) {
                     btn.style.display = 'none';
-                    content.classList.add('expanded'); // remove fade
+                    content.classList.add('expanded');
                 }
             }
         });
+
+        // Lightbox Gallery Functionality
+        const galleryItems = document.querySelectorAll('.project-gallery__item');
+        if (galleryItems.length > 0) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = lightbox.querySelector('.lightbox__image');
+            const lightboxCaption = lightbox.querySelector('.lightbox__caption');
+            const lightboxCounter = lightbox.querySelector('.lightbox__counter');
+            const closeBtn = lightbox.querySelector('.lightbox__close');
+            const prevBtn = lightbox.querySelector('.lightbox__prev');
+            const nextBtn = lightbox.querySelector('.lightbox__next');
+            
+            let currentIndex = 0;
+            
+            // Map images data
+            const imagesData = Array.from(galleryItems).map(item => {
+                const img = item.querySelector('img');
+                return {
+                    src: img.getAttribute('src'),
+                    caption: img.getAttribute('alt') || '',
+                };
+            });
+
+            function updateLightbox() {
+                if (imagesData.length === 0) return;
+                const currentData = imagesData[currentIndex];
+                lightboxImg.src = currentData.src;
+                lightboxImg.alt = currentData.caption;
+                lightboxCaption.textContent = currentData.caption;
+                lightboxCounter.textContent = `${currentIndex + 1} of ${imagesData.length}`;
+            }
+
+            function openLightbox(index) {
+                currentIndex = index;
+                updateLightbox();
+                lightbox.classList.add('is-active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                
+                // Lock Lenis smooth scroll
+                if (typeof lenis !== 'undefined' && lenis) {
+                    lenis.stop();
+                }
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('is-active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                
+                // Unlock Lenis smooth scroll
+                if (typeof lenis !== 'undefined' && lenis) {
+                    lenis.start();
+                }
+                document.body.style.overflow = '';
+            }
+
+            function showNext() {
+                currentIndex = (currentIndex + 1) % imagesData.length;
+                updateLightbox();
+            }
+
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + imagesData.length) % imagesData.length;
+                updateLightbox();
+            }
+
+            // Click events
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const index = parseInt(item.getAttribute('data-index'), 10);
+                    openLightbox(index);
+                });
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrev);
+            nextBtn.addEventListener('click', showNext);
+
+            // Close on background click
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('is-active')) return;
+                if (e.key === 'ArrowRight') {
+                    showNext();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrev();
+                } else if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+
+            // Touch Swipe support
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            lightbox.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const swipeThreshold = 50; // pixels
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    showNext(); // Swipe left -> Next
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    showPrev(); // Swipe right -> Prev
+                }
+            }
+        }
     });
 </script>
 {% endblock %}

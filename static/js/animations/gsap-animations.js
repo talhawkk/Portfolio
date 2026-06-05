@@ -85,6 +85,25 @@ function initGSAPAnimations() {
         });
     });
 
+    // Staggered scale-in for skill cards
+    const skillItemsGrid = document.querySelector('.skills-grid');
+    if (skillItemsGrid) {
+        const items = skillItemsGrid.querySelectorAll('.skill-item');
+        gsap.from(items, {
+            scale: 0.88,
+            opacity: 0,
+            y: 20,
+            duration: 0.55,
+            ease: 'power3.out',
+            stagger: 0.06,
+            scrollTrigger: {
+                trigger: skillItemsGrid,
+                start: 'top 82%',
+                toggleActions: 'play none none none',
+            }
+        });
+    }
+
     // Premium stagger for dense skill chips
     document.querySelectorAll('.skill-cluster').forEach(cluster => {
         const chips = cluster.querySelectorAll('.skill-chip');

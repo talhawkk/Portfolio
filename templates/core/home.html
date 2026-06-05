@@ -101,7 +101,16 @@
             <div class="skills-grid reveal">
                 {% for skill in skills %}
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">{{ skill.icon_class|default:"⚡" }}</div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">
+                            {% if 'devicon' in skill.icon_class %}
+                                <i class="{{ skill.icon_class }}"></i>
+                            {% else %}
+                                {{ skill.icon_class|default:"⚡" }}
+                            {% endif %}
+                        </div>
+                        <span class="skill-item__pct">{{ skill.proficiency }}%</span>
+                    </div>
                     <div class="skill-item__name">{{ skill.name }}</div>
                     <div class="skill-item__bar">
                         <div class="skill-item__bar-fill" data-width="{{ skill.proficiency }}"></div>
@@ -109,33 +118,59 @@
                 </div>
                 {% empty %}
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">PY</div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">PY</div>
+                        <span class="skill-item__pct">95%</span>
+                    </div>
                     <div class="skill-item__name">Python</div>
                     <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="95"></div></div>
                 </div>
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">DJ</div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">DJ</div>
+                        <span class="skill-item__pct">90%</span>
+                    </div>
                     <div class="skill-item__name">Django</div>
                     <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="90"></div></div>
                 </div>
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">JS</div>
-                    <div class="skill-item__name">JavaScript</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="85"></div></div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">FL</div>
+                        <span class="skill-item__pct">82%</span>
+                    </div>
+                    <div class="skill-item__name">Flask</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="82"></div></div>
                 </div>
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">AI</div>
-                    <div class="skill-item__name">ML / AI</div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">RD</div>
+                        <span class="skill-item__pct">80%</span>
+                    </div>
+                    <div class="skill-item__name">Redis</div>
                     <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="80"></div></div>
                 </div>
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">DB</div>
-                    <div class="skill-item__name">PostgreSQL</div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">AI</div>
+                        <span class="skill-item__pct">85%</span>
+                    </div>
+                    <div class="skill-item__name">OpenAI APIs / RAG</div>
                     <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="85"></div></div>
                 </div>
                 <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__icon">DO</div>
-                    <div class="skill-item__name">Docker</div>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">LG</div>
+                        <span class="skill-item__pct">78%</span>
+                    </div>
+                    <div class="skill-item__name">LangChain / LangGraph</div>
+                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="78"></div></div>
+                </div>
+                <div class="skill-item" data-cursor-hover>
+                    <div class="skill-item__top">
+                        <div class="skill-item__icon">AWS</div>
+                        <span class="skill-item__pct">75%</span>
+                    </div>
+                    <div class="skill-item__name">AWS Fundamentals</div>
                     <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="75"></div></div>
                 </div>
                 {% endfor %}

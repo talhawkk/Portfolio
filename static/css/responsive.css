@@ -117,6 +117,38 @@
         grid-template-columns: 1fr;
     }
 
+    /* Lightbox mobile adjustments */
+    .lightbox__prev,
+    .lightbox__next {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+
+    .lightbox__prev {
+        left: var(--space-sm);
+    }
+
+    .lightbox__next {
+        right: var(--space-sm);
+    }
+
+    .lightbox__close {
+        top: var(--space-sm);
+        right: var(--space-sm);
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .lightbox__content {
+        max-width: 95vw;
+    }
+
+    .lightbox__image {
+        max-height: 65vh;
+    }
+
     .timeline {
         padding-left: var(--space-lg);
     }
