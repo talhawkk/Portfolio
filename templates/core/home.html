@@ -105,7 +105,7 @@
             <div class="about-showcase__skills reveal">
                 <div class="compact-skills-grid">
                     {% for skill in skills %}
-                    <div class="compact-skill-card" data-cursor-hover>
+                    <div class="compact-skill-card" data-category="{{ skill.category }}" data-cursor-hover>
                         <div class="compact-skill-card__icon">
                             {% if skill.icon_class and 'devicon' in skill.icon_class %}
                                 <i class="{{ skill.icon_class }}"></i>

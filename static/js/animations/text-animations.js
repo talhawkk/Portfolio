@@ -1,8 +1,7 @@
 /**
  * Text Animations — Premium hero reveal sequence with GSAP
  */
-function initTextAnimations() {
-    document.addEventListener('preloaderComplete', function () {
+document.addEventListener('preloaderComplete', function () {
         var tl = gsap.timeline({
             defaults: { ease: 'power4.out' },
         });
@@ -45,7 +44,4 @@ function initTextAnimations() {
             duration: 0.5,
             ease: 'power2.out',
         }, '-=0.3');
-    });
-}
-
-document.addEventListener('DOMContentLoaded', initTextAnimations);
+});
