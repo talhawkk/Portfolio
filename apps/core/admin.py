@@ -16,7 +16,7 @@ class SiteConfigurationAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Personal Info', {
-            'fields': ('full_name', 'title', 'tagline', 'subtitle', 'bio', 'detailed_bio')
+            'fields': ('full_name', 'title', 'hero_title_line1', 'hero_title_line2', 'subtitle', 'bio', 'detailed_bio')
         }),
         ('Profile', {
             'fields': ('profile_image', 'resume_file')
