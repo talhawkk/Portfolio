@@ -85,24 +85,6 @@ function initGSAPAnimations() {
         });
     });
 
-    // Staggered reveal for compact skill cards
-    const compactSkillsGrid = document.querySelector('.compact-skills-grid');
-    if (compactSkillsGrid) {
-        const cards = compactSkillsGrid.querySelectorAll('.compact-skill-card');
-        gsap.from(cards, {
-            scale: 0.96,
-            opacity: 0,
-            y: 12,
-            duration: 0.5,
-            ease: 'power2.out',
-            stagger: 0.04,
-            scrollTrigger: {
-                trigger: compactSkillsGrid,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-            }
-        });
-    }
 
     // Premium stagger for dense skill chips
     document.querySelectorAll('.skill-cluster').forEach(cluster => {
