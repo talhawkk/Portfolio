@@ -440,6 +440,7 @@
     line-height: var(--lh-normal);
 }
 
+.project-card__arrow {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -777,6 +778,8 @@
 .skill-item__icon i {
     font-size: 1.55rem;
     line-height: 1;
+}
+.skill-item__icon i:not(.colored) {
     color: inherit;
 }
 

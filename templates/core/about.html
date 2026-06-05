@@ -123,7 +123,13 @@
                         {% for skill in group.skills %}
                         <div class="skill-chip" style="--skill-level: {{ skill.proficiency }}%;" data-cursor-hover>
                             <div class="skill-chip__top">
-                                <span class="skill-chip__icon" aria-hidden="true">{% if skill.icon_class %}{{ skill.icon_class }}{% else %}{{ forloop.counter|stringformat:"02d" }}{% endif %}</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    {% if skill.icon_class and 'devicon' in skill.icon_class %}
+                                        <i class="{{ skill.icon_class }}"></i>
+                                    {% else %}
+                                        {{ skill.icon_class|default:forloop.counter|stringformat:"02d" }}
+                                    {% endif %}
+                                </span>
                                 <span class="skill-chip__level">{{ skill.proficiency }}%</span>
                             </div>
                             <div class="skill-chip__body">
