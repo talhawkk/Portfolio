@@ -21,12 +21,12 @@
 
 
                 <h1 class="hero__title" id="hero-title">
-                    <span class="line"><span class="line-inner">Architecting intelligent</span></span>
-                    <span class="line"><span class="line-inner text-gradient">systems.</span></span>
+                    <span class="line"><span class="line-inner">I build things that</span></span>
+                    <span class="line"><span class="line-inner text-gradient">actually work.</span></span>
                 </h1>
 
                 <p class="hero__subtitle" id="hero-subtitle">
-                    <strong style="color: var(--text-primary); font-weight: var(--fw-medium);">Software Engineer (AI & Backend)</strong> specializing in robust backend architectures, generative AI integrations, and scalable AWS cloud deployments.
+                    <strong style="color: var(--text-primary); font-weight: var(--fw-medium);">Software Engineer — AI & Backend</strong> — I build backends in Python/Django, wire up LLMs and voice agents, automate trading systems, and get things running on AWS. The kind of stuff that actually has to work.
                 </p>
 
                 <div class="hero__actions" id="hero-actions">
@@ -35,9 +35,9 @@
                 </div>
 
                 <div class="hero__proof" id="hero-proof" aria-label="Professional focus areas">
-                    <span>Production Django</span>
-                    <span>AI workflows</span>
-                    <span>Cloud delivery</span>
+                    <span>Django in prod</span>
+                    <span>AI that ships</span>
+                    <span>AWS & infra</span>
                 </div>
             </div>
         </div>
@@ -91,10 +91,10 @@
                         <img src="{{ site_config.profile_image.url }}" alt="{{ site_config.full_name }}" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     {% endif %}
-                    <h2 style="margin-bottom: 0;">Crafting Digital<br><span class="text-gradient">Excellence</span></h2>
+                    <h2 style="margin-bottom: 0;">Who I<br><span class="text-gradient">Actually Am</span></h2>
                 </div>
-                <p>{{ site_config.bio|default:"I'm a passionate full-stack engineer specializing in building high-performance web applications. From enterprise SaaS platforms to AI-driven trading systems, I transform complex problems into elegant solutions." }}</p>
-                <p>My approach combines clean architecture, modern design principles, and cutting-edge technology to deliver production-grade systems that make a difference.</p>
+                <p>{{ site_config.bio|default:"I'm a software engineer who's been deep in Django, AI APIs, and AWS for a while now. I've built trading systems, automation tools, and SaaS backends — mostly solo, mostly from scratch." }}</p>
+                <p>I care about code that doesn't fall apart at 3am. Clean enough to read, fast enough to matter, deployed enough to actually be used.</p>
                 <a href="{% url 'core:about' %}" class="btn btn--outline" data-cursor-hover>Learn More</a>
             </div>
 
@@ -151,9 +151,9 @@
 <section class="section" id="projects-section">
     <div class="container">
         <div class="section__header reveal">
-            <span class="section__label">Portfolio</span>
-            <h2 class="section__title">Featured Projects</h2>
-            <p class="section__subtitle">A selection of recent work that showcases my expertise in building production-grade systems.</p>
+            <span class="section__label">Work</span>
+            <h2 class="section__title">Things I've Built</h2>
+            <p class="section__subtitle">Picked a few projects worth showing. Each one solved a real problem and ran in production.</p>
         </div>
 
         <div class="projects-grid">
@@ -238,9 +238,9 @@
 <section class="section" id="experience-section">
     <div class="container container--narrow">
         <div class="section__header reveal">
-            <span class="section__label">Journey</span>
-            <h2 class="section__title">Experience</h2>
-            <p class="section__subtitle">Professional milestones and career highlights.</p>
+            <span class="section__label">Background</span>
+            <h2 class="section__title">Where I've Been</h2>
+            <p class="section__subtitle">How I got here — work, study, and everything in between.</p>
         </div>
 
         <div class="timeline">
@@ -256,16 +256,16 @@
             <div class="timeline__item current reveal">
                 <div class="timeline__dot"></div>
                 <div class="timeline__date">2024 — Present</div>
-                <h3 class="timeline__title">Full-Stack Developer & AI Engineer</h3>
-                <p class="timeline__company">Freelance · Remote</p>
-                <p class="timeline__description">Building enterprise-grade SaaS platforms, AI-driven trading systems, and production-ready web applications for clients across multiple industries.</p>
+                <h3 class="timeline__title">Freelance Developer (Django + AI)</h3>
+                <p class="timeline__company">Self-employed · Remote</p>
+                <p class="timeline__description">Working with clients on backends, automation, and AI integrations. Some crypto trading tools, some SaaS dashboards, some stuff I can't talk about.</p>
             </div>
             <div class="timeline__item reveal">
                 <div class="timeline__dot"></div>
                 <div class="timeline__date">2022 — 2026</div>
                 <h3 class="timeline__title">BS Computer Science</h3>
                 <p class="timeline__company">University</p>
-                <p class="timeline__description">Specializing in artificial intelligence, machine learning, and software engineering. Building real-world production systems alongside academic excellence.</p>
+                <p class="timeline__description">Studying CS while also building real projects on the side. The degree helped with fundamentals — the late nights helped with everything else.</p>
             </div>
             {% endfor %}
         </div>
@@ -280,9 +280,9 @@
 <section class="section" id="blog-section">
     <div class="container">
         <div class="section__header reveal">
-            <span class="section__label">Insights</span>
-            <h2 class="section__title">Latest Posts</h2>
-            <p class="section__subtitle">Thoughts on engineering, architecture, and building at scale.</p>
+            <span class="section__label">Blog</span>
+            <h2 class="section__title">Stuff I Wrote</h2>
+            <p class="section__subtitle">Notes on things I figured out the hard way, or just found interesting enough to write down.</p>
         </div>
 
         <div class="blog-grid">
@@ -324,10 +324,10 @@
 <section class="section cta-section" id="cta-section">
     <div class="container">
         <div class="reveal">
-            <span class="section__label">Let's Connect</span>
-            <h2 class="cta-section__title">Have a project<br><span class="text-gradient">in mind?</span></h2>
-            <p class="cta-section__subtitle">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
-            <a href="{% url 'core:contact' %}" class="btn btn--primary" data-cursor-hover>Start a Conversation</a>
+            <span class="section__label">Reach Out</span>
+            <h2 class="cta-section__title">Got something<br><span class="text-gradient">to build?</span></h2>
+            <p class="cta-section__subtitle">Drop me a message. If it sounds like something I can help with, I'll get back to you pretty quickly.</p>
+            <a href="{% url 'core:contact' %}" class="btn btn--primary" data-cursor-hover>Let's Talk</a>
         </div>
     </div>
 </section>
