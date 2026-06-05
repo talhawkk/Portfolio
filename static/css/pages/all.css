@@ -958,9 +958,11 @@
 .skill-chip__icon i {
     font-size: 1.45rem;
     line-height: 1;
+    color: rgba(255, 255, 255, 0.8) !important; /* Force crisp white for perfect visibility */
+    transition: color 0.3s ease;
 }
-.skill-chip__icon i:not(.colored) {
-    color: inherit;
+.skill-chip:hover .skill-chip__icon i {
+    color: var(--cluster-accent) !important; /* Glow category-specific accent on hover */
 }
 
 .skill-chip__level {
