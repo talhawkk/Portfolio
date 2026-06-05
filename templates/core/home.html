@@ -21,12 +21,12 @@
 
 
                 <h1 class="hero__title" id="hero-title">
-                    <span class="line"><span class="line-inner">I build things that</span></span>
-                    <span class="line"><span class="line-inner text-gradient">actually work.</span></span>
+                    <span class="line"><span class="line-inner">{{ site_config.hero_title_line1|default:"I build things that" }}</span></span>
+                    <span class="line"><span class="line-inner text-gradient">{{ site_config.hero_title_line2|default:"actually work." }}</span></span>
                 </h1>
 
                 <p class="hero__subtitle" id="hero-subtitle">
-                    <strong style="color: var(--text-primary); font-weight: var(--fw-medium);">Software Engineer</strong> — I build complete applications that solve real problems. From writing the core logic to integrating AI, I focus on making software that is reliable and actually gets the job done.
+                    {{ site_config.subtitle|safe }}
                 </p>
 
                 <div class="hero__actions" id="hero-actions">
