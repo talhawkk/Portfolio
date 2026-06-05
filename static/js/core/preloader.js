@@ -8,10 +8,24 @@
 
     if (!preloader || !counter || !progress) return;
 
-    let count = 0;
-    // Snappy loading: faster if already seen in this session
     const hasSeenPreloader = sessionStorage.getItem('preloaderSeen');
-    const duration = hasSeenPreloader ? 300 : 600; 
+    if (hasSeenPreloader) {
+        preloader.style.display = 'none';
+        
+        const dispatchComplete = () => {
+            document.dispatchEvent(new CustomEvent('preloaderComplete'));
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', dispatchComplete);
+        } else {
+            dispatchComplete();
+        }
+        return;
+    }
+
+    let count = 0;
+    const duration = 600; 
     const interval = duration / 100;
 
     const timer = setInterval(() => {

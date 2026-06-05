@@ -5,3 +5,12 @@
         <div class="preloader__progress" id="preloader-progress"></div>
     </div>
 </div>
+<script>
+    if (sessionStorage.getItem('preloaderSeen')) {
+        var preloaderEl = document.getElementById('preloader');
+        if (preloaderEl) {
+            preloaderEl.style.display = 'none';
+        }
+    }
+</script>
+
