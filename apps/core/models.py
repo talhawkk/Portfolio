@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.cache import cache
 
 
 class SiteConfiguration(models.Model):
@@ -45,14 +44,10 @@ class SiteConfiguration(models.Model):
         # Enforce singleton
         self.pk = 1
         super().save(*args, **kwargs)
-        cache.delete('site_config')
 
     @classmethod
     def load(cls):
-        config = cache.get('site_config')
-        if config is None:
-            config, _ = cls.objects.get_or_create(pk=1)
-            cache.set('site_config', config, 3600)
+        config, _ = cls.objects.get_or_create(pk=1)
         return config
 
 
