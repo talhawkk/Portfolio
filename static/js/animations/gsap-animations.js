@@ -85,21 +85,38 @@ function initGSAPAnimations() {
         });
     });
 
-    // Staggered scale-in for skill cards
-    const skillItemsGrid = document.querySelector('.skills-grid');
-    if (skillItemsGrid) {
-        const items = skillItemsGrid.querySelectorAll('.skill-item');
-        gsap.from(items, {
-            scale: 0.88,
+    // Staggered fade/scale-in for skill modules inside dashboard + capsule booting
+    const skillsMonitorGrid = document.querySelector('.skills-monitor-grid');
+    if (skillsMonitorGrid) {
+        const modules = skillsMonitorGrid.querySelectorAll('.skill-module');
+        gsap.from(modules, {
+            scale: 0.94,
             opacity: 0,
-            y: 20,
-            duration: 0.55,
+            y: 16,
+            duration: 0.6,
             ease: 'power3.out',
-            stagger: 0.06,
+            stagger: 0.05,
             scrollTrigger: {
-                trigger: skillItemsGrid,
-                start: 'top 82%',
+                trigger: skillsMonitorGrid,
+                start: 'top 85%',
                 toggleActions: 'play none none none',
+            },
+            onComplete: () => {
+                modules.forEach(module => {
+                    const segmentsContainer = module.querySelector('.skill-module__segments');
+                    if (!segmentsContainer) return;
+                    const proficiency = parseFloat(segmentsContainer.getAttribute('data-proficiency') || 80);
+                    const activeCount = Math.round(proficiency / 20);
+                    const segments = segmentsContainer.querySelectorAll('.segment');
+                    
+                    segments.forEach((seg, index) => {
+                        if (index < activeCount) {
+                            setTimeout(() => {
+                                seg.classList.add('active');
+                            }, index * 100);
+                        }
+                    });
+                });
             }
         });
     }

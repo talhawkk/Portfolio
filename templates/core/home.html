@@ -82,98 +82,134 @@
 <!-- ═══════════════════════════════════════ -->
 <section class="section" id="about-section">
     <div class="container">
-        <div class="about-preview">
-            <div class="about-preview__text reveal">
-                <span class="section__label">About Me</span>
-                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-                    {% if site_config.profile_image %}
-                    <div style="width: 60px; height: 60px; border-radius: var(--radius-full); overflow: hidden; border: 2px solid var(--accent-primary); flex-shrink: 0; box-shadow: var(--shadow-glow);">
-                        <img src="{{ site_config.profile_image.url }}" alt="{{ site_config.full_name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    {% endif %}
-                    <h2 style="margin-bottom: 0;">Who I<br><span class="text-gradient">Actually Am</span></h2>
+        <!-- Developer Dashboard Window -->
+        <div class="dev-dashboard reveal">
+            <!-- Window Header -->
+            <div class="dev-dashboard__header">
+                <div class="dev-dashboard__controls">
+                    <span class="control-dot close"></span>
+                    <span class="control-dot minimize"></span>
+                    <span class="control-dot expand"></span>
                 </div>
-                <p>{{ site_config.bio|default:"I'm a software engineer who's been deep in Django, AI APIs, and AWS for a while now. I've built trading systems, automation tools, and SaaS backends — mostly solo, mostly from scratch." }}</p>
-                <p>I care about code that doesn't fall apart at 3am. Clean enough to read, fast enough to matter, deployed enough to actually be used.</p>
-                <a href="{% url 'core:about' %}" class="btn btn--outline" data-cursor-hover>Learn More</a>
+                <div class="dev-dashboard__tabs">
+                    <div class="dev-dashboard__tab active" data-tab="bio">
+                        <svg class="tab-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>about_me.md</span>
+                    </div>
+                    <div class="dev-dashboard__tab" data-tab="stack">
+                        <svg class="tab-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        <span>tech_stack.yaml</span>
+                    </div>
+                </div>
+                <div class="dev-dashboard__status">
+                    <span class="status-branch">git:</span><span class="status-branch-name">main</span>
+                </div>
             </div>
-
-            <div class="skills-grid reveal">
-                {% for skill in skills %}
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">
-                            {% if 'devicon' in skill.icon_class %}
-                                <i class="{{ skill.icon_class }}"></i>
-                            {% else %}
-                                {{ skill.icon_class|default:"⚡" }}
+            
+            <!-- Window Body -->
+            <div class="dev-dashboard__body">
+                <!-- Left Pane: Editor for Bio -->
+                <div class="dev-dashboard__pane pane-bio">
+                    <div class="editor-lines">
+                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+                    </div>
+                    <div class="editor-content">
+                        <div class="bio-header">
+                            {% if site_config.profile_image %}
+                            <div class="bio-avatar">
+                                <img src="{{ site_config.profile_image.url }}" alt="{{ site_config.full_name }}">
+                            </div>
                             {% endif %}
+                            <div class="bio-title-group">
+                                <span class="bio-tag">Final-Year CS</span>
+                                <h3 class="bio-name">{{ site_config.full_name|default:"Talha Abbas" }}</h3>
+                            </div>
                         </div>
-                        <span class="skill-item__pct">{{ skill.proficiency }}%</span>
-                    </div>
-                    <div class="skill-item__name">{{ skill.name }}</div>
-                    <div class="skill-item__bar">
-                        <div class="skill-item__bar-fill" data-width="{{ skill.proficiency }}"></div>
+                        <div class="bio-text">
+                            <p class="p-highlight">{{ site_config.bio|default:"I'm a software engineer who's been deep in Django, AI APIs, and AWS for a while now. I've built trading systems, automation tools, and SaaS backends — mostly solo, mostly from scratch." }}</p>
+                            <p>I care about code that doesn't fall apart at 3am. Clean enough to read, fast enough to matter, deployed enough to actually be used.</p>
+                        </div>
+                        <div class="bio-actions">
+                            <a href="{% url 'core:about' %}" class="btn btn--outline btn--small" data-cursor-hover>view_full_profile()</a>
+                        </div>
                     </div>
                 </div>
-                {% empty %}
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">PY</div>
-                        <span class="skill-item__pct">95%</span>
+                
+                <!-- Right Pane: Tech Stack Monitor -->
+                <div class="dev-dashboard__pane pane-stack">
+                    <div class="stack-monitor-header">
+                        <span class="monitor-title">System Status: Active Stack</span>
+                        <span class="monitor-pulse"></span>
                     </div>
-                    <div class="skill-item__name">Python</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="95"></div></div>
-                </div>
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">DJ</div>
-                        <span class="skill-item__pct">90%</span>
+                    
+                    <div class="skills-monitor-grid">
+                        {% for skill in skills %}
+                        <!-- Skill Module Card -->
+                        <div class="skill-module" data-tech="{{ skill.name|lower }}" data-cursor-hover>
+                            <div class="skill-module__header">
+                                <div class="skill-module__icon-box">
+                                    {% if skill.icon_class and 'devicon' in skill.icon_class %}
+                                        <i class="{{ skill.icon_class }}"></i>
+                                    {% else %}
+                                        <span class="skill-module__abbr">{{ skill.icon_class|default:"⚡" }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="skill-module__meta">
+                                    <h4 class="skill-module__name">{{ skill.name }}</h4>
+                                    <span class="skill-module__category">{{ skill.get_category_display|upper }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-module__body">
+                                <div class="skill-module__meter-label">
+                                    <span>Proficiency</span>
+                                    <span>{{ skill.proficiency }}%</span>
+                                </div>
+                                <!-- Segmented capsule bars instead of standard progress bar -->
+                                <div class="skill-module__segments" data-proficiency="{{ skill.proficiency }}">
+                                    <span class="segment"></span>
+                                    <span class="segment"></span>
+                                    <span class="segment"></span>
+                                    <span class="segment"></span>
+                                    <span class="segment"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <!-- Fallback mock cards when DB is empty -->
+                        <div class="skill-module" data-tech="python" data-cursor-hover>
+                            <div class="skill-module__header">
+                                <div class="skill-module__icon-box"><i class="devicon-python-plain colored"></i></div>
+                                <div class="skill-module__meta">
+                                    <h4 class="skill-module__name">Python</h4>
+                                    <span class="skill-module__category">BACKEND</span>
+                                </div>
+                            </div>
+                            <div class="skill-module__body">
+                                <div class="skill-module__meter-label"><span>Proficiency</span><span>90%</span></div>
+                                <div class="skill-module__segments" data-proficiency="90">
+                                    <span class="segment"></span><span class="segment"></span><span class="segment"></span><span class="segment"></span><span class="segment"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-module" data-tech="django" data-cursor-hover>
+                            <div class="skill-module__header">
+                                <div class="skill-module__icon-box"><i class="devicon-django-plain colored"></i></div>
+                                <div class="skill-module__meta">
+                                    <h4 class="skill-module__name">Django</h4>
+                                    <span class="skill-module__category">BACKEND</span>
+                                </div>
+                            </div>
+                            <div class="skill-module__body">
+                                <div class="skill-module__meter-label"><span>Proficiency</span><span>85%</span></div>
+                                <div class="skill-module__segments" data-proficiency="85">
+                                    <span class="segment"></span><span class="segment"></span><span class="segment"></span><span class="segment"></span><span class="segment"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="skill-item__name">Django</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="90"></div></div>
                 </div>
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">FL</div>
-                        <span class="skill-item__pct">82%</span>
-                    </div>
-                    <div class="skill-item__name">Flask</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="82"></div></div>
-                </div>
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">RD</div>
-                        <span class="skill-item__pct">80%</span>
-                    </div>
-                    <div class="skill-item__name">Redis</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="80"></div></div>
-                </div>
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">AI</div>
-                        <span class="skill-item__pct">85%</span>
-                    </div>
-                    <div class="skill-item__name">OpenAI APIs / RAG</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="85"></div></div>
-                </div>
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">LG</div>
-                        <span class="skill-item__pct">78%</span>
-                    </div>
-                    <div class="skill-item__name">LangChain / LangGraph</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="78"></div></div>
-                </div>
-                <div class="skill-item" data-cursor-hover>
-                    <div class="skill-item__top">
-                        <div class="skill-item__icon">AWS</div>
-                        <span class="skill-item__pct">75%</span>
-                    </div>
-                    <div class="skill-item__name">AWS Fundamentals</div>
-                    <div class="skill-item__bar"><div class="skill-item__bar-fill" data-width="75"></div></div>
-                </div>
-                {% endfor %}
             </div>
         </div>
     </div>
