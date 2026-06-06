@@ -1,9 +1,9 @@
-name: Deploy to DigitalOcean
+name: Deploy Hamza Portfolio (Hamza Branch)
 
 on:
   push:
     branches:
-      - main
+      - hamza
 
 jobs:
   deploy:
@@ -20,11 +20,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/www/portfolio
+            cd /var/www/portfolio_hamza
             
             # Fetch latest changes
             git fetch --all
-            git reset --hard origin/main
+            git reset --hard origin/hamza
             
             # Activate virtual environment and install dependencies
             source venv/bin/activate
@@ -35,4 +35,4 @@ jobs:
             python manage.py collectstatic --noinput --settings=portfolio_project.settings.production
             
             # Restart Gunicorn service to apply code changes
-            sudo systemctl restart gunicorn
+            sudo systemctl restart gunicorn_hamza

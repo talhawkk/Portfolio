@@ -1,0 +1,38 @@
+name: Deploy Talha Portfolio (Main Branch)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Droplet via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /var/www/portfolio
+            
+            # Fetch latest changes
+            git fetch --all
+            git reset --hard origin/main
+            
+            # Activate virtual environment and install dependencies
+            source venv/bin/activate
+            pip install -r requirements.txt
+            
+            # Run database migrations and collect static files
+            python manage.py migrate --settings=portfolio_project.settings.production
+            python manage.py collectstatic --noinput --settings=portfolio_project.settings.production
+            
+            # Restart Gunicorn service to apply code changes
+            sudo systemctl restart gunicorn
