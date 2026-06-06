@@ -2,10 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from decouple import config
 
 # Customize admin site
-admin.site.site_header = 'Talha Abbas — Portfolio Admin'
-admin.site.site_title = 'Portfolio Admin'
+admin.site.site_header = config('ADMIN_SITE_HEADER', default='Talha Abbas — Portfolio Admin')
+admin.site.site_title = config('ADMIN_SITE_TITLE', default='Portfolio Admin')
 admin.site.index_title = 'Dashboard'
 
 urlpatterns = [
