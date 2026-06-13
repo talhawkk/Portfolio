@@ -6,14 +6,26 @@ from .models import Technology, Project, ProjectImage
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
+class MultipleFileField(forms.FileField):
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if not data:
+            single_file_clean(None, initial)
+            return []
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = [single_file_clean(data, initial)]
+        return result
+
 class ProjectAdminForm(forms.ModelForm):
-    gallery_folder = forms.FileField(
+    gallery_folder = MultipleFileField(
         widget=MultipleFileInput(attrs={'multiple': True, 'webkitdirectory': True, 'directory': True}),
         required=False,
         label="Upload Gallery Folder",
         help_text="Select a folder to upload all images inside it. The sequence will be based on file names. Images will be added to the gallery below."
     )
-    gallery_multiple = forms.FileField(
+    gallery_multiple = MultipleFileField(
         widget=MultipleFileInput(attrs={'multiple': True}),
         required=False,
         label="Upload Multiple Images",
