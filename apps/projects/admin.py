@@ -3,16 +3,18 @@ from django import forms
 from django.db.models import Max
 from .models import Technology, Project, ProjectImage
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
 
 class ProjectAdminForm(forms.ModelForm):
     gallery_folder = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={'multiple': True, 'webkitdirectory': True, 'directory': True}),
+        widget=MultipleFileInput(attrs={'multiple': True, 'webkitdirectory': True, 'directory': True}),
         required=False,
         label="Upload Gallery Folder",
         help_text="Select a folder to upload all images inside it. The sequence will be based on file names. Images will be added to the gallery below."
     )
     gallery_multiple = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={'multiple': True}),
+        widget=MultipleFileInput(attrs={'multiple': True}),
         required=False,
         label="Upload Multiple Images",
         help_text="Select multiple individual images to upload at once."
