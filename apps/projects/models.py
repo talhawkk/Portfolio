@@ -1,5 +1,9 @@
 from django.db import models
 from django.utils.text import slugify
+from io import BytesIO
+import sys
+from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class Technology(models.Model):
@@ -84,3 +88,44 @@ class ProjectImage(models.Model):
 
     def __str__(self):
         return f'{self.project.title} — Image {self.order}'
+
+    def save(self, *args, **kwargs):
+        is_new_image = False
+        if not self.pk:
+            is_new_image = True
+        else:
+            try:
+                orig = ProjectImage.objects.get(pk=self.pk)
+                if orig.image != self.image:
+                    is_new_image = True
+            except ProjectImage.DoesNotExist:
+                is_new_image = True
+
+        if is_new_image and self.image:
+            try:
+                img = Image.open(self.image)
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                
+                # Resize if larger than 1920x1080
+                img.thumbnail((1920, 1080), Image.Resampling.LANCZOS)
+                
+                output = BytesIO()
+                img.save(output, format='JPEG', quality=75, optimize=True)
+                output.seek(0)
+                
+                # Ensure .jpg extension
+                file_name = self.image.name.rsplit('.', 1)[0] + '.jpg'
+                
+                self.image = InMemoryUploadedFile(
+                    output,
+                    'ImageField',
+                    file_name,
+                    'image/jpeg',
+                    sys.getsizeof(output),
+                    None
+                )
+            except Exception as e:
+                pass # If image processing fails, save the original image
+                
+        super().save(*args, **kwargs)
