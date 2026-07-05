@@ -1409,9 +1409,7 @@
     z-index: 1;
     pointer-events: none;
     opacity: 0;
-    background:
-        radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(255, 255, 255, 0.16), transparent 28%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.07), transparent 42%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 42%);
     transition: opacity var(--duration-normal) var(--ease-smooth);
 }
 
