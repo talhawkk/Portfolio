@@ -840,20 +840,6 @@
     box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
 }
 
-.cert-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-    opacity: 0;
-    transform: translateX(-35%);
-    transition: opacity var(--duration-normal) var(--ease-smooth), transform var(--duration-slow) var(--ease-out);
-}
-
-.cert-card:hover::before {
-    opacity: 1;
-    transform: translateX(35%);
-}
 
 .cert-card__inner {
     position: relative;
