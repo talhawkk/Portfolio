@@ -14,14 +14,6 @@ from apps.projects.models import Project
 from apps.blog.models import BlogPost
 
 
-# Sitemap registry — index includes these sections.
-sitemaps = {
-    'static': StaticViewSitemap,
-    'projects': ProjectSitemap,
-    'blog': BlogSitemap,
-}
-
-
 class StaticViewSitemap(Sitemap):
     """Top-level marketing pages — highest priority, refreshed weekly."""
 
@@ -55,3 +47,11 @@ class BlogSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.updated_date
+
+
+# Sitemap registry — index includes these sections.
+sitemaps = {
+    'static': StaticViewSitemap,
+    'projects': ProjectSitemap,
+    'blog': BlogSitemap,
+}
