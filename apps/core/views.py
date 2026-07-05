@@ -63,6 +63,8 @@ def home(request):
         'experiences': Experience.objects.all()[:5],
         'education': Education.objects.all(),
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
+        # SEO
+        'seo_title': f'{config.full_name} — Python/Django Developer & AI Integrator',
     }
     return render(request, 'core/home.html', context)
 
@@ -112,6 +114,8 @@ def about(request):
         'experiences': Experience.objects.all(),
         'education': Education.objects.all(),
         'certifications': Certification.objects.all(),
+        # SEO
+        'seo_title': f'About {config.full_name} Ali — Python/Django Developer in Pakistan',
     }
 
     return render(request, 'core/about.html', context)
@@ -122,6 +126,8 @@ def contact(request):
     config = SiteConfiguration.load()
     context = {
         'page_title': f'Contact — {config.full_name}',
+        # SEO
+        'seo_title': f'Contact {config.full_name} — Hire Python/Django Developer',
     }
 
     if request.method == 'POST':

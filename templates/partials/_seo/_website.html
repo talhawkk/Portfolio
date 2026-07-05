@@ -1,0 +1,20 @@
+{% comment %}
+  WebSite structured data — declares the site as an entity, supports
+  sitelinks search box in Google results. Renders on every page.
+{% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ SITE_NAME }}",
+  "alternateName": "talhawkk",
+  "url": "{{ SITE_URL }}",
+  "description": "{{ site_config.meta_description|default:'Portfolio of Talha Abbas — Python/Django Developer & AI Integrator'|escapejs }}",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ site_config.full_name }}",
+    "url": "{{ SITE_URL }}"
+  }
+}
+</script>

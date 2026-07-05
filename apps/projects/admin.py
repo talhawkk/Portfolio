@@ -81,6 +81,10 @@ class ProjectAdmin(admin.ModelAdmin):
         ('Display', {
             'fields': ('is_featured', 'order')
         }),
+        ('SEO & Social', {
+            'fields': ('meta_description', 'og_image'),
+            'classes': ('collapse',)
+        }),
     )
 
     def save_model(self, request, obj, form, change):

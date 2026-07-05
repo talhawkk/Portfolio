@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ site_config.full_name }} — {{ site_config.title }}{% endblock %}
+{% block title %}{{ seo_title|default:site_config.full_name|add:' — '|add:site_config.title }}{% endblock %}
+{% block meta_description %}{{ site_config.meta_description }}{% endblock %}
+{% block og_type %}website{% endblock %}
+{% block og_image %}{% if site_config.og_image %}{{ SITE_URL }}{{ site_config.og_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -19,8 +22,10 @@
         <div class="hero__layout">
             <div class="hero__content">
 
+                <!-- SEO: descriptive H1 for crawlers (name + role + location) -->
+                <h1 class="visually-hidden">{{ site_config.full_name|default:"Talha Abbas" }} — {{ site_config.title|default:"Python/Django Developer & AI Integrator" }} · {{ site_config.location|default:"Pakistan" }}</h1>
 
-                <h1 class="hero__title" id="hero-title">
+                <h1 class="hero__title" id="hero-title" aria-hidden="true">
                     <span class="line"><span class="line-inner">{{ site_config.hero_title_line1|default:"I build things that" }}</span></span>
                     <span class="line"><span class="line-inner text-gradient">{{ site_config.hero_title_line2|default:"actually work." }}</span></span>
                 </h1>

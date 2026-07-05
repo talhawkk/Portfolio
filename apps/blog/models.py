@@ -69,6 +69,7 @@ class BlogPost(models.Model):
 
     # SEO
     meta_description = models.CharField(max_length=300, blank=True)
+    og_image = models.ImageField(upload_to='blog/og/', blank=True, null=True, help_text='Per-post Open Graph image (1200×630). Falls back to featured_image or site default.')
 
     class Meta:
         ordering = ['-published_date']
@@ -77,6 +78,20 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('blog:detail', kwargs={'slug': self.slug})
+
+    @property
+    def seo_description(self):
+        """Meta description with fallback to excerpt."""
+        return self.meta_description or self.excerpt
+
+    @property
+    def seo_image(self):
+        """OG image: per-post → featured → None (template falls back to site default)."""
+        return self.og_image or self.featured_image
 
     def save(self, *args, **kwargs):
         if not self.slug:

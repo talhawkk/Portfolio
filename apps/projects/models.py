@@ -59,6 +59,10 @@ class Project(models.Model):
     solution = models.TextField(blank=True, help_text='How did you solve it?')
     results = models.TextField(blank=True, help_text='What were the outcomes/metrics?')
 
+    # SEO
+    meta_description = models.CharField(max_length=160, blank=True, help_text='SEO meta description (max 160 chars). Falls back to tagline.')
+    og_image = models.ImageField(upload_to='projects/og/', blank=True, null=True, help_text='Per-project Open Graph image (1200×630). Falls back to featured_image or site default.')
+
     class Meta:
         ordering = ['order', '-created_at']
         verbose_name = 'Project'
@@ -71,6 +75,20 @@ class Project(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('projects:detail', kwargs={'slug': self.slug})
+
+    @property
+    def seo_description(self):
+        """Meta description with fallback to tagline."""
+        return self.meta_description or self.tagline
+
+    @property
+    def seo_image(self):
+        """OG image: per-project → featured → None (template falls back to site default)."""
+        return self.og_image or self.featured_image
 
 
 class ProjectImage(models.Model):

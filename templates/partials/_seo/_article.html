@@ -1,0 +1,31 @@
+{% comment %}
+  Article structured data — pass `article` context with:
+    headline, description, image_url, date_published, date_modified, author, url
+  Used by project_detail and blog_detail templates.
+{% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ article.headline|escapejs }}",
+  "description": "{{ article.description|escapejs }}",
+  "image": "{{ article.image_url }}",
+  "datePublished": "{{ article.date_published|date:'c' }}",
+  "dateModified": "{{ article.date_modified|date:'c' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ site_config.full_name }}",
+    "url": "{{ SITE_URL }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ site_config.full_name }}",
+    "url": "{{ SITE_URL }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ article.url }}"
+  },
+  "inLanguage": "en"
+}
+</script>

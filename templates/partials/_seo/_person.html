@@ -1,0 +1,36 @@
+{% load static %}{% comment %}
+  Person structured data — the #1 schema for ranking a personal name.
+  Feeds Google's Knowledge Graph + AI Overviews (ChatGPT / Perplexity / SGE).
+  Renders on every page via base.html.
+{% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site_config.full_name }}",
+  "alternateName": ["Talha Abbas Ali", "talhawkk"],
+  "givenName": "Talha",
+  "familyName": "Abbas",
+  "jobTitle": "{{ site_config.title|default:'Python/Django Developer' }}",
+  "description": "{{ site_config.meta_description|default:site_config.subtitle|escapejs }}",
+  "url": "{{ SITE_URL }}",
+  "image": {% if site_config.profile_image %}"{{ SITE_URL }}{{ site_config.profile_image.url }}"{% else %}"{{ SITE_URL }}{% static 'images/og-default.png' %}"{% endif %},
+  "email": "mailto:{{ site_config.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "PK",
+    "addressRegion": "{{ site_config.location|default:'Punjab' }}",
+    "addressLocality": "Lahore"
+  },
+  "nationality": { "@type": "Country", "name": "Pakistan" },
+  "knowsAbout": ["Python", "Django", "Flask", "REST APIs", "PostgreSQL", "Redis", "AI integration", "AWS", "Cloud deployment", "Backend development"],
+  "knowsLanguage": ["en", "ur"],
+  "sameAs": [
+    "https://github.com/talhawkk",
+    "https://www.linkedin.com/in/talhawkk",
+    "https://x.com/talhaabbasali5"
+    {% if site_config.github_url %}, "{{ site_config.github_url }}"{% endif %}
+    {% if site_config.linkedin_url and site_config.linkedin_url != 'https://github.com/talhawkk' %}, "{{ site_config.linkedin_url }}"{% endif %}
+  ]
+}
+</script>

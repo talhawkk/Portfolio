@@ -28,8 +28,11 @@ class SiteConfigurationAdmin(admin.ModelAdmin):
             'fields': ('years_experience', 'projects_completed', 'technologies_used'),
             'description': 'These numbers appear in the stats counter section.'
         }),
-        ('SEO', {
-            'fields': ('meta_description', 'meta_keywords'),
+        ('SEO & Social', {
+            'fields': (
+                'meta_description', 'meta_keywords',
+                'og_image', 'canonical_domain', 'twitter_handle', 'location',
+            ),
             'classes': ('collapse',)
         }),
     )

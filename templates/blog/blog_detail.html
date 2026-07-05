@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ post.title }} — {{ site_config.full_name }}{% endblock %}
-{% block meta_description %}{{ post.meta_description|default:post.excerpt }}{% endblock %}
+
+{% block title %}{{ seo_title|default:post.title|add:' — '|add:site_config.full_name }}{% endblock %}
+{% block meta_description %}{{ seo_description|default:post.meta_description|default:post.excerpt }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{% if seo_image_url %}{{ seo_image_url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block og_image_secure %}{% if seo_image_url %}{{ seo_image_url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block og_image_alt %}{{ post.title }} — Blog post by Talha Abbas{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_jsonld %}
+{% include 'partials/_seo/_breadcrumb.html' %}
+{% include 'partials/_seo/_article.html' %}
+{% endblock %}
+
 {% block content %}
 <article class="blog-detail">
     <header class="blog-detail__header reveal">

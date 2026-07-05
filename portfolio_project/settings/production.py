@@ -22,18 +22,26 @@ DATABASES = {
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+SECURE_PERMISSIONS_POLICY = {
+    'camera': (),
+    'microphone': (),
+    'geolocation': (),
+    'payment': (),
+}
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # --- HTTPS / SSL Settings ---
-# Step A (before SSL): keep these False
-# Step B (after certbot SSL): set all to True in your .env or flip defaults
-SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
-SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=False, cast=bool)
-CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=False, cast=bool)
+# Site is served over HTTPS (https://talhawkk.me) — keep SSL + cookie hardening on
+# in production. Flip to False via .env only for emergency debugging.
+SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=True, cast=bool)
+SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
+CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 
-# HSTS — uncomment after HTTPS is confirmed working
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
+# HSTS — site is on HTTPS with a valid cert; tell browsers to pin it for 1 year
+# and allow submission to the HSTS preload list.
+SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=31536000, cast=int)
+SECURE_HSTS_PRELOAD = config('SECURE_HSTS_PRELOAD', default=True, cast=bool)
 
 # Trusted origins — both IP (temp) and new domain
 CSRF_TRUSTED_ORIGINS = config(

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Contact — {{ site_config.full_name }}{% endblock %}
+{% block title %}{{ seo_title|default:'Contact — '|add:site_config.full_name }}{% endblock %}
+{% block meta_description %}Get in touch with {{ site_config.full_name|default:'Talha Abbas' }} — Python/Django developer available for freelance, internships, and full-stack projects in Pakistan and remotely.{% endblock %}
+{% block og_image %}{% if site_config.og_image %}{{ SITE_URL }}{{ site_config.og_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -9,6 +11,7 @@
     <div class="container">
         <span class="section__label reveal">Get in Touch</span>
         <h1 class="page-header__title reveal">Let's <span class="text-gradient">Talk</span></h1>
+        <h2 class="visually-hidden">Contact {{ site_config.full_name|default:'Talha Abbas' }}</h2>
         <p class="page-header__subtitle reveal">Got a project, a problem, or just want to see if I'm a good fit? Reach out and I'll get back to you.</p>
     </div>
 </section>
@@ -19,7 +22,9 @@
             <!-- Contact Info -->
             <div class="contact-panel reveal">
                 <span class="contact-panel__eyebrow">Reach me at</span>
-                <h3 class="contact-panel__title">Contact Info</h3>
+                <h2 class="contact-panel__title">Contact Info</h2>
+
+                <address class="contact-info" style="font-style: normal;">
 
                 <div class="contact-info__item">
                     <div class="contact-info__icon">
@@ -37,7 +42,7 @@
                     </div>
                     <div>
                         <div class="contact-info__label">Location</div>
-                        <div class="contact-info__value">Pakistan · Available Remotely</div>
+                        <div class="contact-info__value">{{ site_config.location|default:'Pakistan' }} · Available Remotely</div>
                     </div>
                 </div>
 
@@ -50,6 +55,8 @@
                         <div class="contact-info__value">Usually same day, max 24h</div>
                     </div>
                 </div>
+
+                </address>
 
                 <div class="contact-panel__socials">
                     <h4>Find me on</h4>

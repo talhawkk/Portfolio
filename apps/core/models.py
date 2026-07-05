@@ -27,6 +27,10 @@ class SiteConfiguration(models.Model):
     # SEO
     meta_description = models.CharField(max_length=300, blank=True, help_text='SEO meta description for home page')
     meta_keywords = models.CharField(max_length=300, blank=True)
+    og_image = models.ImageField(upload_to='og/', blank=True, null=True, help_text='Default Open Graph social-share image (1200×630). Falls back to generated og-default.png.')
+    canonical_domain = models.CharField(max_length=200, default='https://talhawkk.me', help_text='Canonical production domain (no trailing slash)')
+    twitter_handle = models.CharField(max_length=50, default='@talhaabbasali5', help_text='Twitter/X handle (with @)')
+    location = models.CharField(max_length=100, default='Pakistan', help_text='Location shown on contact page + Person schema')
 
     # Stats
     years_experience = models.PositiveIntegerField(default=3)

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Blog — {{ site_config.full_name }}{% endblock %}
+{% block title %}{{ seo_title|default:'Blog — '|add:site_config.full_name }}{% endblock %}
+{% block meta_description %}{{ seo_description|default:'Notes and write-ups by Talha Abbas (talhawkk) on Django, Python, REST APIs, AI integrations, and building software that ships.' }}{% endblock %}
+
 {% block content %}
 <section class="page-header page-header--insights">
     <div class="container">

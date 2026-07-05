@@ -6,37 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- SEO -->
+    {# ===== Core SEO ===== #}
     <title>{% block title %}{{ site_config.full_name }} — {{ site_config.title }}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{{ site_config.meta_description|default:'Portfolio of Talha Abbas — Full-Stack Engineer & AI Developer' }}{% endblock %}">
-    <meta name="keywords" content="{{ site_config.meta_keywords|default:'portfolio, developer, engineer, AI, full-stack' }}">
+    <meta name="description" content="{% block meta_description %}{{ site_config.meta_description|default:'Portfolio of Talha Abbas — Python/Django Developer & AI Integrator building web apps, REST APIs, and AI-integrated backend systems.' }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{{ site_config.meta_keywords|default:'Talha Abbas, Talha Abbas Ali, talhawkk, Python developer, Django developer, AI integration, backend developer, full-stack engineer' }}{% endblock %}">
     <meta name="author" content="{{ site_config.full_name }}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="theme-color" content="#2dd4bf">
+    <meta name="color-scheme" content="dark">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="{% block og_title %}{{ site_config.full_name }}{% endblock %}">
-    <meta property="og:description" content="{{ site_config.meta_description }}">
-    <meta property="og:type" content="website">
-    {% block og_image %}{% endblock %}
+    {# ===== Canonical ===== #}
+    <link rel="canonical" href="{% block canonical_url %}{{ canonical_url }}{% endblock %}">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='1em' font-size='80' font-family='sans-serif' font-weight='bold' fill='%232dd4bf'>TA</text></svg>">
+    {# ===== Open Graph ===== #}
+    <meta property="og:site_name" content="{{ SITE_NAME }}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ site_config.full_name }} — {{ site_config.title }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_config.meta_description|default:'Portfolio of Talha Abbas — Python/Django Developer & AI Integrator.' }}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ canonical_url }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'images/og-default.png' %}{% endblock %}">
+    <meta property="og:image:secure_url" content="{% block og_image_secure %}{{ SITE_URL }}{% static 'images/og-default.png' %}{% endblock %}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{% block og_image_alt %}Talha Abbas — Python/Django Developer & AI Integrator{% endblock %}">
 
-    <!-- Fonts -->
+    {# ===== Twitter Card ===== #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@talhaabbasali5">
+    <meta name="twitter:creator" content="@talhaabbasali5">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ site_config.full_name }} — {{ site_config.title }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ site_config.meta_description|default:'Portfolio of Talha Abbas — Python/Django Developer & AI Integrator.' }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ SITE_URL }}{% static 'images/og-default.png' %}{% endblock %}">
+    <meta name="twitter:image:alt" content="{% block twitter_image_alt %}Talha Abbas — Python/Django Developer & AI Integrator{% endblock %}">
+
+    {# ===== PWA / Icons ===== #}
+    <link rel="manifest" href="{% url 'manifest' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'icons/favicon.svg' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/favicon-16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}">
+    <link rel="mask-icon" href="{% static 'icons/favicon.svg' %}" color="#2dd4bf">
+    <link rel="shortcut icon" href="{% static 'icons/favicon.ico' %}">
+
+    {# ===== Performance hints ===== #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 
-    <!-- CSS -->
+    {# ===== CSS ===== #}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/components.css' %}">
     <link rel="stylesheet" href="{% static 'css/pages/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 
-    <!-- Devicons — Tech brand icons -->
+    {# Devicons — Tech brand icons #}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     {% block extra_css %}{% endblock %}
 
-    <!-- CSRF Token for AJAX -->
+    {# CSRF Token for AJAX #}
     <meta name="csrf-token" content="{{ csrf_token }}">
+
+    {# ===== Structured Data (JSON-LD) ===== #}
+    {% include 'partials/_seo/_person.html' %}
+    {% include 'partials/_seo/_website.html' %}
+    {% block extra_jsonld %}{% endblock %}
 </head>
 <body>
     <!-- Preloader -->

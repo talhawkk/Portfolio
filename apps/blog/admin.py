@@ -36,8 +36,8 @@ class BlogPostAdmin(admin.ModelAdmin):
         ('Publishing', {
             'fields': ('author_name', 'is_published', 'is_featured', 'published_date')
         }),
-        ('SEO', {
-            'fields': ('meta_description',),
+        ('SEO & Social', {
+            'fields': ('meta_description', 'og_image'),
             'classes': ('collapse',)
         }),
     )

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About — {{ site_config.full_name }}{% endblock %}
+{% block title %}{{ seo_title|default:'About — '|add:site_config.full_name }}{% endblock %}
+{% block meta_description %}{{ site_config.detailed_bio|truncatechars:160|default:site_config.bio }}{% endblock %}
+{% block og_image %}{% if site_config.og_image %}{{ SITE_URL }}{{ site_config.og_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -12,7 +14,7 @@
             <div class="about-hero__content reveal">
                 <span class="section__label">The Person</span>
                 <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: var(--space-sm);">{{ site_config.full_name|default:"Talha Abbas" }}</h1>
-                <h3 class="text-gradient" style="font-size: 1.25rem; margin-bottom: var(--space-lg); font-weight: var(--fw-semibold);">{{ site_config.title|default:"Full-Stack Engineer & AI Developer" }}</h3>
+                <h2 class="text-gradient" style="font-size: 1.25rem; margin-bottom: var(--space-lg); font-weight: var(--fw-semibold);">{{ site_config.title|default:"Full-Stack Engineer & AI Developer" }}</h2>
                 
                 <div class="about-hero__bio" style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--space-xl); max-width: 600px;">
                     {{ site_config.detailed_bio|default:site_config.bio|default:"I'm a passionate software engineer with a deep focus on building scalable, production-grade systems."|linebreaksbr }}

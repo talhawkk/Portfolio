@@ -15,6 +15,12 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
+# --- SEO / Site identity (canonical, non-www) ---
+# Used for canonical tags, Open Graph url, sitemaps, JSON-LD and manifest.
+SITE_URL = config('SITE_URL', default='https://talhawkk.me').rstrip('/')
+SITE_NAME = config('SITE_NAME', default='Talha Abbas')
+SITE_ID = 1
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -24,6 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
+    'django.contrib.redirects',
 
     # Third-party
     'rest_framework',
@@ -46,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio_project.urls'
