@@ -714,17 +714,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.skill-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--accent-primary);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
 
 .skill-card.is-hidden {
     display: none !important;
@@ -752,9 +741,6 @@
     box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 212, 191, 0.15);
 }
 
-.skill-card:hover::before {
-    opacity: 1;
-}
 
 .skill-card__icon {
     display: flex;
