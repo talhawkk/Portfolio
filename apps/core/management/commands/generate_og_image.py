@@ -20,10 +20,12 @@ Re-runnable — overwrites existing files.
 
 import os
 from io import BytesIO
+import base64
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from PIL import Image, ImageDraw, ImageFont
+from apps.core.models import SiteConfiguration
 
 
 # Brand tokens
@@ -101,6 +103,22 @@ def _draw_favicon_svg(out_path):
         f.write(svg)
 
 
+def _draw_favicon_svg_from_image(profile_img, out_path):
+    """Write an SVG favicon wrapping the base64-encoded profile image."""
+    thumb = profile_img.resize((96, 96), Image.Resampling.LANCZOS)
+    buffered = BytesIO()
+    thumb.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <clipPath id="circleView">
+    <circle cx="50" cy="50" r="50"/>
+  </clipPath>
+  <image width="100" height="100" href="data:image/png;base64,{img_str}" clip-path="url(#circleView)"/>
+</svg>'''
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(svg)
+
+
 def _draw_favicon_png(size, out_path):
     """Render a square PNG icon at the given size."""
     img = Image.new('RGBA', (size, size), (*BG_RGB, 255))
@@ -145,12 +163,44 @@ class Command(BaseCommand):
         og_path = os.path.join(img_dir, 'og-default.png')
         og_img = _draw_og_card()
         og_img.save(og_path, 'PNG', optimize=True)
-        self.stdout.write(self.style.SUCCESS(f'  ✓ {og_path}  ({OG_W}×{OG_H})'))
+        self.stdout.write(self.style.SUCCESS(f'  OK: {og_path}  ({OG_W}x{OG_H})'))
+
+        # --- Load profile image for favicons ---
+        profile_img = None
+        try:
+            config_obj = SiteConfiguration.load()
+            profile_path = None
+            if config_obj.profile_image:
+                try:
+                    profile_path = config_obj.profile_image.path
+                except NotImplementedError:
+                    pass
+            if not profile_path or not os.path.exists(profile_path):
+                fallback_path = os.path.join(settings.MEDIA_ROOT, 'profile', 'profile_photo.jpeg')
+                if os.path.exists(fallback_path):
+                    profile_path = fallback_path
+            
+            if profile_path and os.path.exists(profile_path):
+                raw_img = Image.open(profile_path)
+                # Crop to square
+                w, h = raw_img.size
+                min_dim = min(w, h)
+                left = (w - min_dim) // 2
+                top = (h - min_dim) // 2
+                right = (w + min_dim) // 2
+                bottom = (h + min_dim) // 2
+                profile_img = raw_img.crop((left, top, right, bottom))
+                self.stdout.write(self.style.SUCCESS(f"Loaded profile image from {profile_path} to generate favicons."))
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"Could not load profile photo: {e}. Falling back to default design."))
 
         # --- SVG favicon ---
         svg_path = os.path.join(icon_dir, 'favicon.svg')
-        _draw_favicon_svg(svg_path)
-        self.stdout.write(self.style.SUCCESS(f'  ✓ {svg_path}'))
+        if profile_img:
+            _draw_favicon_svg_from_image(profile_img, svg_path)
+        else:
+            _draw_favicon_svg(svg_path)
+        self.stdout.write(self.style.SUCCESS(f'  OK: {svg_path}'))
 
         # --- PNG favicons / icons ---
         png_tasks = [
@@ -162,12 +212,19 @@ class Command(BaseCommand):
         ]
         for fname, size in png_tasks:
             out = os.path.join(icon_dir, fname)
-            _draw_favicon_png(size, out)
-            self.stdout.write(self.style.SUCCESS(f'  ✓ {out}  ({size}×{size})'))
+            if profile_img:
+                # Resize and save profile image
+                resized = profile_img.resize((size, size), Image.Resampling.LANCZOS)
+                if resized.mode not in ('RGB', 'RGBA'):
+                    resized = resized.convert('RGBA')
+                resized.save(out, 'PNG')
+            else:
+                _draw_favicon_png(size, out)
+            self.stdout.write(self.style.SUCCESS(f'  OK: {out}  ({size}x{size})'))
 
         # --- ICO ---
         ico_path = os.path.join(icon_dir, 'favicon.ico')
         _png_to_ico(os.path.join(icon_dir, 'favicon-32.png'), ico_path)
-        self.stdout.write(self.style.SUCCESS(f'  ✓ {ico_path}'))
+        self.stdout.write(self.style.SUCCESS(f'  OK: {ico_path}'))
 
         self.stdout.write(self.style.SUCCESS('\nAll assets generated. Run collectstatic to deploy.'))
