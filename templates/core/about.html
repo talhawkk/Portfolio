@@ -74,35 +74,32 @@
         </div>
 
         {% if skills_groups %}
-        <div class="skills-container">
-            <div class="skills-filters-wrapper reveal">
-                <div class="skills-filters" role="tablist">
-                    <button class="skill-filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All Domains</button>
-                    {% for group in skills_groups %}
-                    <button class="skill-filter-btn" data-filter="{{ group.slug }}" role="tab" aria-selected="false">{{ group.label }}</button>
+        <div class="skills-showcase">
+            {% for group in skills_groups %}
+            <div class="skill-category-row reveal">
+                <!-- Left Sidebar: Category Info -->
+                <div class="skill-category-info">
+                    <h3 class="skill-category-title" style="--group-accent: {{ group.accent }};">
+                        {{ group.label }}
+                    </h3>
+                    <p class="skill-category-summary">{{ group.summary }}</p>
+                </div>
+                
+                <!-- Right Grid: Skill Badges -->
+                <div class="skill-badge-container">
+                    {% for skill in group.skills %}
+                    <div class="skill-badge" style="--group-accent: {{ group.accent }};">
+                        {% if skill.icon_class and 'devicon' in skill.icon_class %}
+                            <i class="{{ skill.icon_class }}"></i>
+                        {% else %}
+                            <span>{{ skill.icon_class|default:skill.name|slice:":2"|upper }}</span>
+                        {% endif %}
+                        <span class="skill-badge__name">{{ skill.name }}</span>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
-
-            <div class="skills-grid" id="skills-grid">
-                {% for group in skills_groups %}
-                    {% for skill in group.skills %}
-                    <div class="skill-card reveal" data-category="{{ group.slug }}" data-cursor-hover>
-                        <div class="skill-card__icon">
-                            {% if skill.icon_class and 'devicon' in skill.icon_class %}
-                                <i class="{{ skill.icon_class }}"></i>
-                            {% else %}
-                                <span>{{ skill.icon_class|default:skill.name|slice:":2"|upper }}</span>
-                            {% endif %}
-                        </div>
-                        <div class="skill-card__content">
-                            <h4 class="skill-card__name">{{ skill.name }}</h4>
-                            <span class="skill-card__tier">{{ skill.level_label }}</span>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
         {% else %}
         <div class="skills-empty reveal">
