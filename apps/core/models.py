@@ -59,12 +59,12 @@ class Skill(models.Model):
     """Skills/Technologies — manageable from Admin."""
 
     CATEGORY_CHOICES = [
-        ('frontend', 'Frontend'),
-        ('backend', 'Backend'),
-        ('database', 'Database'),
-        ('devops', 'DevOps'),
-        ('ml', 'Machine Learning'),
-        ('tools', 'Tools & Other'),
+        ('backend', 'Backend Engineering'),
+        ('ai', 'AI Engineering'),
+        ('cloud', 'Cloud & DevOps'),
+        ('database', 'Databases & Storage'),
+        ('languages', 'Core Languages'),
+        ('frontend', 'Frontend & UI'),
     ]
 
     name = models.CharField(max_length=100)

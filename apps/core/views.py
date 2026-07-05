@@ -10,35 +10,35 @@ from apps.blog.models import BlogPost
 
 
 SKILL_CATEGORY_META = {
-    'frontend': {
-        'accent': '#2dd4bf',
-        'accent_rgb': '45, 212, 191',
-        'summary': 'Interfaces that feel sharp, fast, accessible, and built for real users.',
-    },
     'backend': {
         'accent': '#38bdf8',
         'accent_rgb': '56, 189, 248',
         'summary': 'APIs, business logic, integrations, and scalable application foundations.',
+    },
+    'ai': {
+        'accent': '#a78bfa',
+        'accent_rgb': '167, 139, 250',
+        'summary': 'AI systems, retrieval flows, LLM integration, and intelligent automation.',
+    },
+    'cloud': {
+        'accent': '#fb7185',
+        'accent_rgb': '251, 113, 133',
+        'summary': 'Deployment workflows, infrastructure, automation, and delivery discipline.',
     },
     'database': {
         'accent': '#facc15',
         'accent_rgb': '250, 204, 21',
         'summary': 'Data modeling, querying, persistence, and performance-minded storage.',
     },
-    'devops': {
-        'accent': '#fb7185',
-        'accent_rgb': '251, 113, 133',
-        'summary': 'Deployment workflows, cloud operations, automation, and delivery discipline.',
-    },
-    'ml': {
-        'accent': '#a78bfa',
-        'accent_rgb': '167, 139, 250',
-        'summary': 'AI systems, retrieval flows, model integration, and intelligent automation.',
-    },
-    'tools': {
+    'languages': {
         'accent': '#34d399',
         'accent_rgb': '52, 211, 153',
-        'summary': 'Developer tooling, collaboration systems, and workflow accelerators.',
+        'summary': 'Foundational programming languages used across the entire tech stack.',
+    },
+    'frontend': {
+        'accent': '#2dd4bf',
+        'accent_rgb': '45, 212, 191',
+        'summary': 'Interfaces that feel sharp, fast, accessible, and built for real users.',
     },
 }
 
@@ -85,7 +85,7 @@ def about(request):
             skill.level_label = _skill_level_label(skill.proficiency)
 
         average = round(sum(skill.proficiency for skill in category_skills) / len(category_skills))
-        meta = SKILL_CATEGORY_META.get(category_key, SKILL_CATEGORY_META['tools'])
+        meta = SKILL_CATEGORY_META.get(category_key, SKILL_CATEGORY_META['languages'])
         group = {
             'slug': category_key,
             'label': category_label,
