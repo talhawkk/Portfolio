@@ -38,6 +38,11 @@ urlpatterns = [
         TemplateView.as_view(template_name='manifest.json', content_type='application/manifest+json'),
         name='manifest',
     ),
+    path(
+        'google5b0c317bf9246b66.html',
+        TemplateView.as_view(template_name='google5b0c317bf9246b66.html', content_type='text/html'),
+        name='google_verification',
+    ),
 ]
 
 if settings.DEBUG:
