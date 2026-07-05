@@ -430,9 +430,6 @@
     transition: color var(--duration-fast) ease;
 }
 
-.project-card:hover .project-card__title {
-    color: var(--accent-primary);
-}
 
 .project-card__tagline {
     font-size: var(--fs-small);
